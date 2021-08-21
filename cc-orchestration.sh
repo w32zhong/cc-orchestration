@@ -14,12 +14,13 @@ ping_host()
 	export PATH=$PATH:/opt/software/slurm/bin
 
 	h=${HOURS}
-	echo "Tasks of mine newer than \$h hours ago [\$(TZ=America/New_York date)]"
+	curtime=\$(TZ=America/New_York date --iso-8601=hours)
+	echo "Tasks of mine newer than \$h hours ago [now: \$curtime]"
 	sacct -u $USER \
 		--format=jobid,jobname%15,Submit,elapsed,state,exitcode,reqtres%60 \
 		-S \$(date -d "\$h hours ago" +%D-%R)
 	
-	echo "New executing jobs [\$(TZ=America/New_York date --iso-8601=hours)]"
+	echo "Newly executing jobs [now: \$curtime]"
 	sacct --allusers --state=running \
 		--format=user,jobid,jobname,account,Submit%20,State,elapsed,reqtres%60 \
 		| grep 'gpu\|-----\|ReqTRES'  | (head -3; echo; tail -10)
@@ -32,6 +33,11 @@ ping_host()
 	EOF
 }
 
-ping_host cedar
-ping_host beluga
-ping_host graham
+ping_all_hosts()
+{
+	ping_host cedar
+	ping_host beluga
+	ping_host graham
+}
+
+$@
