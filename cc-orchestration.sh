@@ -11,7 +11,7 @@ ping_host()
 	ssh $USER@$NODE 'bash -s' <<-EOF
 	export SBATCH_ACCOUNT=$PROJ
 	export SALLOC_ACCOUNT=$PROJ
-	export PATH=$PATH:/opt/software/slurm/bin
+	export PATH=\$PATH:/opt/software/slurm/bin
 
 	h=${HOURS}
 	curtime=\$(TZ=America/New_York date --iso-8601=hours)
@@ -38,6 +38,26 @@ ping_all_hosts()
 	ping_host cedar
 	ping_host beluga
 	ping_host graham
+}
+
+cancel_job()
+{
+	NODE=${1-cedar}.computecanada.ca
+	JOB=${2}
+	echo -e "\n \t\t\t $NODE \n"
+	ssh $USER@$NODE 'bash -s' <<-EOF
+	export SBATCH_ACCOUNT=$PROJ
+	export SALLOC_ACCOUNT=$PROJ
+	export PATH=\$PATH:/opt/software/slurm/bin
+
+	if [ -n "$JOB" ]; then
+		echo "Cancel $JOB ..."
+		scancel $JOB
+	else
+		sacct -u $USER
+		echo "Which job to cancel?"
+	fi
+	EOF
 }
 
 $@
