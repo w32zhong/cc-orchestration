@@ -60,4 +60,15 @@ cancel_job()
 	EOF
 }
 
+tail_log()
+{
+	NODE=${1-cedar}.computecanada.ca
+	LOG=${2-*.out}
+	PROJ=${3-rrg-jimmylin}
+	ssh $USER@$NODE 'bash -s' <<-EOF
+	cd ~/projects/$PROJ/$USER
+	tail -f $LOG
+	EOF
+}
+
 $@
