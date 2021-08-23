@@ -16,7 +16,8 @@ set -x
 srun --unbuffered python pya0/utils/transformer.py 8 \
         --cluster tcp://$(hostname):8921 \
         --ckpoint base-models/bert-base-uncased \
-        --tok_ckpoint base-models/bert-tokenizer
+        --tok_ckpoint base-models/bert-tokenizer \
+        --save_fold 100 --epochs 3
 
 # Other example usages
 #srun python pytorch-test-v2.py tcp://$(hostname):8921
