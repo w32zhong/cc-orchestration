@@ -14,6 +14,6 @@ export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 set -x
 #srun python pytorch-test.py tcp://$(hostname):8921
-srun --unbuffered python pya0/utils/transformer.py 8 --master tcp://$(hostname):8921 --ckpoint base-models/bert-base-uncased
+srun --unbuffered python pya0/utils/transformer.py 8 --master tcp://$(hostname):8921 --ckpoint base-models/bert-base-uncased --tok_ckpoint base-models/bert-tokenizer
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10
 #srun --jobid 12345 --pty bash
