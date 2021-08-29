@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --nodes=2           # total nodes
-#SBATCH --gres=gpu:2        # how many GPUs per node
+#SBATCH --nodes=3           # total nodes
+#SBATCH --gres=gpu:4        # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=4-02:10      # 4 days and 2 hours and 10 minutes
@@ -13,11 +13,14 @@ export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 set -x
+rm -rf ./save
 srun --unbuffered python pya0/utils/transformer.py pretrain \
         --cluster tcp://$(hostname):8921 \
         --ckpoint base-models/bert-base-uncased \
         --tok_ckpoint base-models/bert-tokenizer \
-        --batch_size $((2 * 2 * 5)) --save_fold 100 --epochs 3
+        --shards_list data/shards.txt \
+        --batch_size $((3 * 4 * 10)) --save_fold 100 --epochs 4
+
 # Other example usages
 #srun python pytorch-test-v2.py tcp://$(hostname):8921
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
