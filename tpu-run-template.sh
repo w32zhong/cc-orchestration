@@ -22,6 +22,6 @@ gcloud compute operations list
 python3 pya0/utils/transformer.py pretrain \
 	--batch_size $((8 * 16)) \
 	--epochs 4 \
-	--save_fold 100 \
+	--save_fold 4 \
 	--xla_cores 8 \
 	--shards_list data/shards.txt
