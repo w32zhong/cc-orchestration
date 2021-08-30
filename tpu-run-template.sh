@@ -14,7 +14,7 @@
 # pip3 install fire GPUtil transformers
 # wget https://vault.cs.uwaterloo.ca/s/5t9N6wPtEn7pBrJ/download -O mse-aops-2021-vocab.pkl
 #
-# export TPU_IP_ADDRESS=`gcloud compute tpus describe mse --zone=europe-west4-a | grep -Po '(?<=ipAddress: ).*' | head -1`
+# export TPU_IP_ADDRESS=`gcloud compute tpus describe mse --zone=europe-west4-a | grep -Po '(?<=ipAddress: ).*' | head -1` && echo $TPU_IP_ADDRESS
 # export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
 
 gcloud compute operations list
