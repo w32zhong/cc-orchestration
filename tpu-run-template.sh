@@ -18,10 +18,10 @@ conda activate torch-xla-1.8.1
 export TPU_IP_ADDRESS=`gcloud compute tpus describe mse --zone=europe-west4-a | grep -Po '(?<=ipAddress: ).*' | head -1` && echo $TPU_IP_ADDRESS
 export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
 
-fallocate -l 20G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
+sudo fallocate -l 20G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
 
 gcloud compute operations list
 # on a TPU-v3-8 (torch-1.8)
