@@ -1,7 +1,6 @@
 #!/bin/bash
 USER=w32zhong
 PROJ=def-jimmylin
-set -e
 
 ping_host()
 {
@@ -70,5 +69,3 @@ tail_log()
 	tail -f $LOG
 	EOF
 }
-
-$@
