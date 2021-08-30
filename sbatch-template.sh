@@ -19,7 +19,7 @@ srun --unbuffered python pya0/utils/transformer.py pretrain \
         --ckpoint base-models/bert-base-uncased \
         --tok_ckpoint base-models/bert-tokenizer \
         --shards_list data/shards.txt \
-        --batch_size $((3 * 4 * 10)) --save_fold 100 --epochs 4
+        --batch_size $((3 * 4 * 10)) --save_fold 5 --epochs 4
 
 # Other example usages
 #srun python pytorch-test-v2.py tcp://$(hostname):8921
