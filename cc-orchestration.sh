@@ -63,9 +63,20 @@ tail_log()
 {
 	NODE=${1-cedar}.computecanada.ca
 	LOG=${2-*.out}
-	PROJ=${3-rrg-jimmylin}
+	PROJ=${3-/home/$USER/projects/rrg-jimmylin/w32zhong}
 	ssh $USER@$NODE 'bash -s' <<-EOF
-	cd ~/projects/$PROJ/$USER
+	cd $PROJ
 	tail -f $LOG
+	EOF
+}
+
+list_files()
+{
+	NODE=${1-cedar}.computecanada.ca
+	PROJ=${2-/home/$USER/projects/rrg-jimmylin/w32zhong}
+	ssh $USER@$NODE 'bash -s' <<-EOF
+	set -x
+	cd $PROJ
+	ls -l
 	EOF
 }
