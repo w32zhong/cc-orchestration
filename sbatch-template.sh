@@ -14,9 +14,11 @@ export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 set -x
 rm -rf ./save
+START_POINT=base-models/bert-base-uncased
+#START_POINT=save/0-5-3672
 srun --unbuffered python pya0/utils/transformer.py pretrain \
         --cluster tcp://$(hostname):8921 \
-        --ckpoint base-models/bert-base-uncased \
+        --ckpoint $START_POINT \
         --tok_ckpoint base-models/bert-tokenizer \
         --shards_list data/shards.txt \
         --batch_size $((3 * 4 * 10)) --save_fold 5 --epochs 4
