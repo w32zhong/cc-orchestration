@@ -13,6 +13,8 @@
 # conda activate torch-xla-1.8.1
 # pip3 install fire GPUtil transformers
 # wget https://vault.cs.uwaterloo.ca/s/5t9N6wPtEn7pBrJ/download -O mse-aops-2021-vocab.pkl
+#
+# sudo apt-get install psmisc
 
 conda activate torch-xla-1.8.1
 export TPU_IP_ADDRESS=`gcloud compute tpus describe math --zone=europe-west4-a | grep -Po '(?<=ipAddress: ).*' | head -1` && echo $TPU_IP_ADDRESS
@@ -24,6 +26,8 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 
 gcloud compute operations list
+killall python3
+
 # on a TPU-v3-8 (torch-1.8)
 python3 pya0/utils/transformer.py pretrain \
 	--batch_size $((8 * 16)) \
