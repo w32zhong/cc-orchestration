@@ -13,7 +13,6 @@ export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 set -x
-rm -rf ./save
 START_POINT=base-models/bert-base-uncased
 #START_POINT=save/0-5-3672
 srun --unbuffered python pya0/utils/transformer.py pretrain \
