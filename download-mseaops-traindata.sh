@@ -1,7 +1,9 @@
 mkdir -p data
 cd data
 
-function get() { wget --content-disposition $1/download }
+function get() {
+	wget --content-disposition $1/download
+}
 
 get https://vault.cs.uwaterloo.ca/s/FBxsZSLMCeLZDMk
 get https://vault.cs.uwaterloo.ca/s/ALw3SwqjFCADz2c
