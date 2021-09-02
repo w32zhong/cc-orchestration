@@ -13,14 +13,21 @@ export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 TRAINER=finetune
-#START_POINT=base-models/bert-base-uncased
+#TRAINER=pretrain
 START_POINT=save/$TRAINER/0-0-0
-srun --unbuffered python pya0/utils/transformer.py $TRAINER start \
-        --cluster tcp://$(hostname):8921 \
-        --ckpoint $START_POINT \
-        --tok_ckpoint base-models/bert-tokenizer \
-        --shards_list data/shards-for-$TRAINER.txt \
-        --batch_size $((2 * 2 * 10)) --save_fold 2 --epochs 4
+TOK_CKPOINT=base-models/bert-base-uncased
+if [ $TRAINER == finetune ]; then
+    ADD_DAT=./data/mse-aops-2021-data.pkl.tags.ids
+else
+    ADD_DAT=./data/mse-aops-2021-vocab.pkl
+fi
+
+set -x
+srun --unbuffered python \
+    utils/transformer.py $TRAINER $START_POINT $TOK_CKPOINT $ADD_DAT \
+    --cluster tcp://$(hostname):8921 \
+    --shards_list data/shards-for-$TRAINER.txt \
+    --batch_size $((2 * 2 * 10)) --save_fold 4 --epochs 20
 
 # Other example usages
 #srun python pytorch-test-v2.py tcp://$(hostname):8921
