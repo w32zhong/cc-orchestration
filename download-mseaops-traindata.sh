@@ -18,4 +18,4 @@ get https://vault.cs.uwaterloo.ca/s/KWQoXNHcEzDDxJn
 get https://vault.cs.uwaterloo.ca/s/M5Snx4TLyLrcPia
 get https://vault.cs.uwaterloo.ca/s/HCCereecb2DR8Po
 get https://vault.cs.uwaterloo.ca/s/GLHBJd6L5a99cqt
-ls *.tags.* > shards-for-tags.txt
+ls *.tags.[0-9]* > shards-for-tags.txt
