@@ -14,8 +14,8 @@ export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 TRAINER=finetune
 #TRAINER=pretrain
-START_POINT=save/$TRAINER/0-0-0
-TOK_CKPOINT=base-models/bert-base-uncased
+START_POINT=save/$TRAINER/0-0-0 #base-models/bert-base-uncased
+TOK_CKPOINT=base-models/bert-tokenizer
 if [ $TRAINER == finetune ]; then
     ADD_DAT=./data/mse-aops-2021-data.pkl.tags.ids
 else
