@@ -24,7 +24,7 @@ fi
 
 set -x
 srun --unbuffered python \
-    utils/transformer.py $TRAINER $START_POINT $TOK_CKPOINT $ADD_DAT \
+    ./pya0/utils/transformer.py $TRAINER $START_POINT $TOK_CKPOINT $ADD_DAT \
     --cluster tcp://$(hostname):8921 \
     --shards_list data/shards-for-$TRAINER.txt \
     --batch_size $((2 * 2 * 10)) --save_fold 4 --epochs 20
