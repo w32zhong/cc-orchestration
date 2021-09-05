@@ -34,9 +34,10 @@ ping_host()
 
 ping_all_hosts()
 {
-	ping_host cedar
-	ping_host beluga
-	ping_host graham
+	HOURS=${1-12}
+	ping_host cedar $HOURS
+	ping_host beluga $HOURS
+	ping_host graham $HOURS
 }
 
 cancel_job()
