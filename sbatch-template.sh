@@ -5,35 +5,50 @@
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=4-02:10      # 4 days and 2 hours and 10 minutes
 #SBATCH --output=job-%j-%N.out
-
 set -x
+
+#####################
+#  Configuration
+#####################
 TRAINER=${1-colbert}
 DATA_VER=FBxsZSLMCeLZDMk
 CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
+DATA_DIR=data.$DATA_VER
+SHARDS_LIST=$DATA_DIR/shards-for-$TRAINER.txt
 
 case $TRAINER in
    pretrain)
     DEV_BSIZE=12
     EPOCHS=10
+
+    START_POINT=$DATA_DIR/base-models/bert-base-uncased
+    TOK_CKPOINT=$DATA_DIR/base-models/bert-tokenizer
     EXTRA_DAT=$DATA_DIR/mse-aops-2021-vocab.pkl
+    EXTRA_ARG=
     ;;
    finetune)
     DEV_BSIZE=12
     EPOCHS=5
+
+    START_POINT=$DATA_DIR/base-models/bert-pretrained-for-math
+    TOK_CKPOINT=$DATA_DIR/base-models/bert-tokenizer-for-math
     EXTRA_DAT=$DATA_DIR/mse-aops-2021-data.pkl.tags.ids
+    EXTRA_ARG=
     ;;
    colbert)
     DEV_BSIZE=10
     EPOCHS=4
+
+    START_POINT=$DATA_DIR/base-models/bert-finetuned-for-math
+    TOK_CKPOINT=$DATA_DIR/base-models/bert-tokenizer-for-math
     EXTRA_DAT=
     EXTRA_ARG=--active_fp16
     ;;
 esac
 
-START_POINT=$DATA_DIR/$TRAINER/model
-TOK_CKPOINT=$DATA_DIR/$TRAINER/tokenizer
-SHARDS_LIST=$DATA_DIR/shards-for-$TRAINER.txt
-
+#####################
+#   Run SLURM Job
+#####################
 N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
 N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
 
@@ -42,7 +57,6 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-DATA_DIR=data.$DATA_VER
 if [ ! -e $DATA_DIR ]; then
     tarball=`mktemp`
     wget https://vault.cs.uwaterloo.ca/s/$DATA_VER -O $tarball
@@ -51,7 +65,7 @@ fi
 
 srun --unbuffered \
     python ./pya0/utils/transformer.py $TRAINER $START_POINT $TOK_CKPOINT $EXTRA_DAT \
-    --cluster tcp://$(hostname):8921 \
+    --cluster tcp://$(hostname):8912 \
     --shards_list $SHARDS_LIST \
     --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
     --save_fold 5 --epochs $EPOCHS $EXTRA_ARG
