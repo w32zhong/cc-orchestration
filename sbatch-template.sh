@@ -11,40 +11,56 @@ set -x
 #  Configuration
 #####################
 TRAINER=${1-colbert}
-DATA_VER=FBxsZSLMCeLZDMk
 CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
-DATA_DIR=data.$DATA_VER
-SHARDS_LIST=$DATA_DIR/shards-for-$TRAINER.txt
 
 case $TRAINER in
    pretrain)
-    DEV_BSIZE=12
-    EPOCHS=10
+    DEV_BSIZE=10
+    EPOCHS=20
+    SAVE_FOLD=5
 
-    START_POINT=$DATA_DIR/base-models/bert-base-uncased
-    TOK_CKPOINT=$DATA_DIR/base-models/bert-tokenizer
+    DATA_VER=rwXKRZPsX8m3HFe
+    START_POINT=$DATA_DIR/bert-base-uncased
+    TOK_CKPOINT=$DATA_DIR/bert-tokenizer
+    SHARDS_LIST=$DATA_DIR/shards.txt
     EXTRA_DAT=$DATA_DIR/mse-aops-2021-vocab.pkl
     EXTRA_ARG=
     ;;
    finetune)
-    DEV_BSIZE=12
-    EPOCHS=5
+    DEV_BSIZE=10
+    EPOCHS=20
+    SAVE_FOLD=1
 
-    START_POINT=$DATA_DIR/base-models/bert-pretrained-for-math
-    TOK_CKPOINT=$DATA_DIR/base-models/bert-tokenizer-for-math
+    DATA_VER=2nXzW9m3jDY9H6m
+    START_POINT=$DATA_DIR/bert-pretrained-for-math
+    TOK_CKPOINT=$DATA_DIR/bert-tokenizer-for-math
+    SHARDS_LIST=$DATA_DIR/shards.txt
     EXTRA_DAT=$DATA_DIR/mse-aops-2021-data.pkl.tags.ids
     EXTRA_ARG=
     ;;
    colbert)
     DEV_BSIZE=10
-    EPOCHS=4
+    EPOCHS=5
+    SAVE_FOLD=5
 
-    START_POINT=$DATA_DIR/base-models/bert-finetuned-for-math
-    TOK_CKPOINT=$DATA_DIR/base-models/bert-tokenizer-for-math
+    DATA_VER=dE8HMCdMW9PWFXw
+    START_POINT=$DATA_DIR/bert-finetuned-for-math
+    TOK_CKPOINT=$DATA_DIR/bert-tokenizer-for-math
+    SHARDS_LIST=$DATA_DIR/shards.txt
     EXTRA_DAT=
     EXTRA_ARG=--active_fp16
     ;;
 esac
+
+#####################
+#   Download Data
+#####################
+DATA_DIR=data.${DATA_VER}
+if [ ! -e $DATA_DIR ]; then
+    tarball=`mktemp`
+    wget https://vault.cs.uwaterloo.ca/s/$DATA_VER -O $tarball
+    tar xzf $tarball --one-top-level=$DATA_DIR --strip-components 1
+fi
 
 #####################
 #   Run SLURM Job
@@ -57,18 +73,12 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-if [ ! -e $DATA_DIR ]; then
-    tarball=`mktemp`
-    wget https://vault.cs.uwaterloo.ca/s/$DATA_VER -O $tarball
-    tar xzf $tarball --one-top-level=$DATA_DIR --strip-components 1
-fi
-
 srun --unbuffered \
     python ./pya0/utils/transformer.py $TRAINER $START_POINT $TOK_CKPOINT $EXTRA_DAT \
     --cluster tcp://$(hostname):8912 \
     --shards_list $SHARDS_LIST \
     --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
-    --save_fold 5 --epochs $EPOCHS $EXTRA_ARG
+    --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 
 # Other example usages
 #srun python pytorch-test-v2.py tcp://$(hostname):8921
