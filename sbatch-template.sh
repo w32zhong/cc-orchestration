@@ -13,11 +13,11 @@ set -x
 TRAINER=${1-colbert}
 CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
 
+EPOCHS=40
 case $TRAINER in
    pretrain)
     DEV_BSIZE=10
-    EPOCHS=20
-    SAVE_FOLD=5
+    SAVE_FOLD=10
 
     DATA_VER=rwXKRZPsX8m3HFe
     START_POINT=bert-base-uncased
@@ -28,8 +28,7 @@ case $TRAINER in
     ;;
    finetune)
     DEV_BSIZE=10
-    EPOCHS=20
-    SAVE_FOLD=1
+    SAVE_FOLD=2
 
     DATA_VER=2nXzW9m3jDY9H6m
     START_POINT=bert-pretrained-for-math
@@ -39,9 +38,8 @@ case $TRAINER in
     EXTRA_ARG=
     ;;
    colbert)
-    DEV_BSIZE=10
-    EPOCHS=5
-    SAVE_FOLD=5
+    DEV_BSIZE=6
+    SAVE_FOLD=10
 
     DATA_VER=dE8HMCdMW9PWFXw
     START_POINT=bert-finetuned-for-math
