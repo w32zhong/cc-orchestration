@@ -38,7 +38,7 @@ case $TRAINER in
     EXTRA_ARG=
     ;;
    colbert)
-    DEV_BSIZE=6
+    DEV_BSIZE=5
     SAVE_FOLD=10
 
     DATA_VER=dE8HMCdMW9PWFXw
