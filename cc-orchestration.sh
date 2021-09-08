@@ -12,6 +12,9 @@ ping_host()
 	export SALLOC_ACCOUNT=$PROJ
 	export PATH=\$PATH:/opt/software/slurm/bin
 
+	echo "My current Running Tasks"
+	squeue -u $USER
+
 	h=${HOURS}
 	curtime=\$(TZ=America/New_York date --iso-8601=hours)
 	echo "Tasks of mine newer than \$h hours ago [now: \$curtime]"
