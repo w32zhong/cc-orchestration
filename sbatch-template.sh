@@ -12,6 +12,7 @@ set -x
 #####################
 TRAINER=${1-colbert}
 CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
+COMMAND=$0
 
 EPOCHS=40
 case $TRAINER in
