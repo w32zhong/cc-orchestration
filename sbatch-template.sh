@@ -12,9 +12,10 @@ set -x
 #####################
 TRAINER=${1-colbert}
 CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
-COMMAND=$0
+COMMAND="$0 $@"
 
 EPOCHS=40
+TEST_CYCLE=50
 case $TRAINER in
    pretrain)
     DEV_BSIZE=10
@@ -24,6 +25,7 @@ case $TRAINER in
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
     EXTRA_DAT=mse-aops-2021-vocab.pkl
     EXTRA_ARG=
     ;;
@@ -78,6 +80,7 @@ if which srun; then
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
+        --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
         --cluster tcp://$(hostname):8912 \
         --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
@@ -85,8 +88,8 @@ if which srun; then
 else
     echo python ./pya0/utils/transformer.py $TRAINER \
     $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
-    --shards_list $DATA_DIR/$SHARDS_LIST --batch_size $DEV_BSIZE \
-    --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
+    --test_file $DATA_DIR/$TEST_FILE --shards_list $DATA_DIR/$SHARDS_LIST \
+    --batch_size $DEV_BSIZE --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 fi
 
 # Other example usages
