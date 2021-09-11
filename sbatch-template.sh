@@ -16,13 +16,13 @@ CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
 COMMAND="$0 $@"
 
 EPOCHS=40
-TEST_CYCLE=50
+TEST_CYCLE=100
 case $TRAINER-${SETUP} in
    pretrain-from-scratch)
     DEV_BSIZE=10
     SAVE_FOLD=10
 
-    DATA_VER=rwXKRZPsX8m3HFe
+    DATA_VER=arjmPWtGwzKrkmR
     START_POINT=bert-from-scratch
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards-for-scratch.txt
@@ -34,7 +34,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=10
     SAVE_FOLD=10
 
-    DATA_VER=rwXKRZPsX8m3HFe
+    DATA_VER=arjmPWtGwzKrkmR
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards-for-newvocab.txt
