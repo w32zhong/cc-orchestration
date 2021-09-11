@@ -42,6 +42,19 @@ case $TRAINER-${SETUP} in
     EXTRA_DAT=mse-aops-2021-vocab.pkl
     EXTRA_ARG=
     ;;
+   pretrain-for-newvocab-slowlr)
+    DEV_BSIZE=10
+    SAVE_FOLD=10
+
+    DATA_VER=arjmPWtGwzKrkmR
+    START_POINT=bert-base-uncased
+    TOK_CKPOINT=bert-tokenizer
+    SHARDS_LIST=shards-for-newvocab.txt
+    TEST_FILE=test.txt
+    EXTRA_DAT=mse-aops-2021-vocab.pkl
+    EXTRA_ARG=--lr 1e-7
+    ;;
+
    finetune-)
     DEV_BSIZE=10
     SAVE_FOLD=2
@@ -109,3 +122,4 @@ fi
 #srun python pytorch-test-v2.py tcp://$(hostname):8921
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
 #srun --jobid 12345 --pty bash
+#(cd pya0 && git pull) && (cd cc-orchestration && git pull)
