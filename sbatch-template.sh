@@ -10,26 +10,39 @@ set -x
 #####################
 #  Configuration
 #####################
-TRAINER=${1-colbert}
+TRAINER=${1-pretrain}
+SETUP=${2}
 CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
 COMMAND="$0 $@"
 
 EPOCHS=40
 TEST_CYCLE=50
-case $TRAINER in
-   pretrain)
+case $TRAINER-${SETUP} in
+   pretrain-from-scratch)
+    DEV_BSIZE=10
+    SAVE_FOLD=10
+
+    DATA_VER=rwXKRZPsX8m3HFe
+    START_POINT=bert-from-scratch
+    TOK_CKPOINT=bert-tokenizer
+    SHARDS_LIST=shards-for-scratch.txt
+    TEST_FILE=test.txt
+    EXTRA_DAT=mse-aops-2021-vocab.pkl
+    EXTRA_ARG=
+    ;;
+   pretrain-for-newvocab)
     DEV_BSIZE=10
     SAVE_FOLD=10
 
     DATA_VER=rwXKRZPsX8m3HFe
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
-    SHARDS_LIST=shards.txt
+    SHARDS_LIST=shards-for-newvocab.txt
     TEST_FILE=test.txt
     EXTRA_DAT=mse-aops-2021-vocab.pkl
     EXTRA_ARG=
     ;;
-   finetune)
+   finetune-)
     DEV_BSIZE=10
     SAVE_FOLD=2
 
@@ -40,7 +53,7 @@ case $TRAINER in
     EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
     EXTRA_ARG=
     ;;
-   colbert)
+   colbert-)
     DEV_BSIZE=5
     SAVE_FOLD=10
 
