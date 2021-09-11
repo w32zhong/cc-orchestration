@@ -77,6 +77,11 @@ case $TRAINER-${SETUP} in
     EXTRA_DAT=
     EXTRA_ARG=--active_fp16
     ;;
+
+   *)
+    echo "[Bad args] $COMMAND"
+    exit 1;
+    ;;
 esac
 
 #####################
