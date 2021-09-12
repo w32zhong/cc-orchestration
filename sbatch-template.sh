@@ -19,7 +19,7 @@ EPOCHS=40
 TEST_CYCLE=100
 case $TRAINER-${SETUP} in
    pretrain-from-scratch)
-    DEV_BSIZE=10
+    DEV_BSIZE=8
     SAVE_FOLD=10
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -31,7 +31,7 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=
     ;;
    pretrain-for-newvocab)
-    DEV_BSIZE=10
+    DEV_BSIZE=8
     SAVE_FOLD=10
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -52,7 +52,7 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards-for-newvocab.txt
     TEST_FILE=test.txt
     EXTRA_DAT=mse-aops-2021-vocab.pkl
-    EXTRA_ARG=--lr 1e-7
+    EXTRA_ARG="--lr 1e-7"
     ;;
 
    finetune-)
@@ -106,6 +106,8 @@ export NCCL_BLOCKING_WAIT=1  # Set this variable to use the NCCL backend
 export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
+
+nvidia-smi
 
 if which srun; then
     srun --unbuffered \
