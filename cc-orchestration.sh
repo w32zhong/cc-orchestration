@@ -70,7 +70,18 @@ tail_log()
 	PROJ=${3-/home/$USER/projects/rrg-jimmylin/w32zhong}
 	ssh $USER@$NODE 'bash -s' <<-EOF
 	cd $PROJ
-	tail -f $LOG
+	tail -n 50 -f $LOG
+	EOF
+}
+
+head_log()
+{
+	NODE=${1-cedar}.computecanada.ca
+	LOG=${2-*.out}
+	PROJ=${3-/home/$USER/projects/rrg-jimmylin/w32zhong}
+	ssh $USER@$NODE 'bash -s' <<-EOF
+	cd $PROJ
+	head -50 $LOG
 	EOF
 }
 
