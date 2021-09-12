@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=2           # total nodes
-#SBATCH --gres=gpu:v100:4   # how many GPUs per node
+#SBATCH --gres=gpu:4        # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=4-02:10      # 4 days and 2 hours and 10 minutes
@@ -127,4 +127,8 @@ fi
 #srun python pytorch-test-v2.py tcp://$(hostname):8921
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
 #srun --jobid 12345 --pty bash
-#(cd pya0 && git pull) && (cd cc-orchestration && git pull)
+#
+# git clone https://github.com/t-k-/cc-orchestration.git
+# git clone https://github.com/approach0/pya0.git
+# ln -s cc-orchestration/sbatch-template.sh sbatch.sh
+# (cd pya0 && git pull) && (cd cc-orchestration && git pull)
