@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=2           # total nodes
-#SBATCH --gres=gpu:4        # how many GPUs per node
+#SBATCH --gres=gpu:v100:4   # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=4-02:10      # 4 days and 2 hours and 10 minutes
@@ -19,7 +19,7 @@ EPOCHS=40
 TEST_CYCLE=100
 case $TRAINER-${SETUP} in
    pretrain-from-scratch)
-    DEV_BSIZE=8
+    DEV_BSIZE=10
     SAVE_FOLD=10
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -31,7 +31,7 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=
     ;;
    pretrain-for-newvocab)
-    DEV_BSIZE=8
+    DEV_BSIZE=10
     SAVE_FOLD=10
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -106,8 +106,6 @@ export NCCL_BLOCKING_WAIT=1  # Set this variable to use the NCCL backend
 export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
-
-nvidia-smi
 
 if which srun; then
     srun --unbuffered \
