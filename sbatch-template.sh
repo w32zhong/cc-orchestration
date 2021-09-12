@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --nodes=2           # total nodes
-#SBATCH --gres=gpu:4        # how many GPUs per node
+#SBATCH --nodes=4           # total nodes
+#SBATCH --gres=gpu:2        # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=4-02:10      # 4 days and 2 hours and 10 minutes
@@ -19,7 +19,7 @@ EPOCHS=40
 TEST_CYCLE=100
 case $TRAINER-${SETUP} in
    pretrain-from-scratch)
-    DEV_BSIZE=10
+    DEV_BSIZE=8
     SAVE_FOLD=10
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -31,7 +31,7 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=
     ;;
    pretrain-for-newvocab)
-    DEV_BSIZE=10
+    DEV_BSIZE=8
     SAVE_FOLD=10
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -43,7 +43,7 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=
     ;;
    pretrain-for-newvocab-slowlr)
-    DEV_BSIZE=10
+    DEV_BSIZE=8
     SAVE_FOLD=10
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -56,7 +56,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    finetune-)
-    DEV_BSIZE=10
+    DEV_BSIZE=8
     SAVE_FOLD=2
 
     DATA_VER=2nXzW9m3jDY9H6m
