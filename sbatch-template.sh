@@ -55,17 +55,31 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG="--lr 1e-7"
     ;;
 
-   finetune-)
+   finetune-from-base)
     DEV_BSIZE=8
     SAVE_FOLD=2
 
-    DATA_VER=2nXzW9m3jDY9H6m
-    START_POINT=bert-pretrained-for-math
+    DATA_VER=r4waWQd4Jn8BbaT
+    START_POINT=bert-base-uncased
+    TOK_CKPOINT=bert-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=mse-aops-2021-data.pkl.tags.1405726
+    EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
+    EXTRA_ARG="--lr 5e-7"
+    ;;
+   finetune-from-pretrained)
+    DEV_BSIZE=8
+    SAVE_FOLD=2
+
+    DATA_VER=r4waWQd4Jn8BbaT
+    START_POINT=bert-pretrained-for-math-small
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
+    TEST_FILE=mse-aops-2021-data.pkl.tags.1405726
     EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
-    EXTRA_ARG=
+    EXTRA_ARG="--lr 5e-7"
     ;;
+
    colbert-)
     DEV_BSIZE=5
     SAVE_FOLD=10
