@@ -90,9 +90,10 @@ list_files()
 	NODE=${1-cedar}.computecanada.ca
 	PROJ=${2-/home/$USER/projects/rrg-jimmylin/w32zhong}
 	ssh $USER@$NODE 'bash -s' <<-EOF
-	set -x
+	echo -> $PROJ
 	cd $PROJ
 	ls -l
+	echo COPY A FILE: scp -r $USER@$NODE:\$(pwd)/somefile .
 	EOF
 }
 
