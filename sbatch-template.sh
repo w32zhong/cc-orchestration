@@ -28,7 +28,7 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards-for-scratch.txt
     TEST_FILE=test.txt
     EXTRA_DAT=mse-aops-2021-vocab.pkl
-    EXTRA_ARG=
+    EXTRA_ARG="--lr 1e-4"
     ;;
 
    pretrain-for-newvocab)
