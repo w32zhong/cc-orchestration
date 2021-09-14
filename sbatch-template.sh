@@ -20,7 +20,7 @@ TEST_CYCLE=100
 case $TRAINER-${SETUP} in
    pretrain-from-scratch)
     DEV_BSIZE=8
-    SAVE_FOLD=10
+    SAVE_FOLD=1
 
     DATA_VER=arjmPWtGwzKrkmR
     START_POINT=bert-from-scratch
@@ -30,9 +30,10 @@ case $TRAINER-${SETUP} in
     EXTRA_DAT=mse-aops-2021-vocab.pkl
     EXTRA_ARG=
     ;;
+
    pretrain-for-newvocab)
     DEV_BSIZE=8
-    SAVE_FOLD=10
+    SAVE_FOLD=2
 
     DATA_VER=arjmPWtGwzKrkmR
     START_POINT=bert-base-uncased
@@ -42,40 +43,31 @@ case $TRAINER-${SETUP} in
     EXTRA_DAT=mse-aops-2021-vocab.pkl
     EXTRA_ARG=
     ;;
-   pretrain-for-newvocab-slowlr)
-    DEV_BSIZE=8
-    SAVE_FOLD=10
-
-    DATA_VER=arjmPWtGwzKrkmR
-    START_POINT=bert-base-uncased
-    TOK_CKPOINT=bert-tokenizer
-    SHARDS_LIST=shards-for-newvocab.txt
-    TEST_FILE=test.txt
-    EXTRA_DAT=mse-aops-2021-vocab.pkl
-    EXTRA_ARG="--lr 1e-7"
-    ;;
 
    finetune-from-base)
     DEV_BSIZE=8
     SAVE_FOLD=2
 
-    DATA_VER=r4waWQd4Jn8BbaT
+    DATA_VER=B3rsLXePamSTTmG
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
-    TEST_FILE=mse-aops-2021-data.pkl.tags.1405726
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
     EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
     EXTRA_ARG="--lr 5e-7"
     ;;
+
    finetune-from-pretrained)
     DEV_BSIZE=8
     SAVE_FOLD=2
 
-    DATA_VER=r4waWQd4Jn8BbaT
-    START_POINT=bert-pretrained-for-math-small
+    DATA_VER=B3rsLXePamSTTmG
+    START_POINT=bert-pretrained-for-math-medium
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
-    TEST_FILE=mse-aops-2021-data.pkl.tags.1405726
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
     EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
     EXTRA_ARG="--lr 5e-7"
     ;;
