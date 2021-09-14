@@ -66,22 +66,22 @@ cancel_job()
 tail_log()
 {
 	NODE=${1-cedar}.computecanada.ca
-	LOG=${2-*.out}
+	LOG=${2}
 	PROJ=${3-/home/$USER/projects/rrg-jimmylin/w32zhong}
 	ssh $USER@$NODE 'bash -s' <<-EOF
 	cd $PROJ
-	tail -n 50 -f $LOG
+	tail -n 50 -f job-$LOG*.out
 	EOF
 }
 
 head_log()
 {
 	NODE=${1-cedar}.computecanada.ca
-	LOG=${2-*.out}
+	LOG=${2}
 	PROJ=${3-/home/$USER/projects/rrg-jimmylin/w32zhong}
 	ssh $USER@$NODE 'bash -s' <<-EOF
 	cd $PROJ
-	head -50 $LOG
+	head -50 job-$LOG*.out
 	EOF
 }
 
@@ -94,4 +94,31 @@ list_files()
 	cd $PROJ
 	ls -l
 	EOF
+}
+
+cancel_job()
+{
+	NODE=${1-cedar}.computecanada.ca
+	JOB_ID=${2-0}
+	ssh $USER@$NODE 'bash -s' <<-EOF
+	export PATH=\$PATH:/opt/software/slurm/bin
+	scancel $JOB_ID
+	EOF
+}
+
+list_jobs()
+{
+	NODE=${1-cedar}.computecanada.ca
+	echo "$NODE"
+	ssh $USER@$NODE 'bash -s' <<-EOF
+	export PATH=\$PATH:/opt/software/slurm/bin
+	squeue -u $USER
+	EOF
+}
+
+list_all_jobs()
+{
+	list_jobs cedar
+	list_jobs beluga
+	list_jobs graham
 }
