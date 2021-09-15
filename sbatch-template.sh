@@ -143,7 +143,7 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-if [ -z $EXTRA_DAT ]; then
+if [ ! -z $EXTRA_DAT ]; then
     EXTRA_DAT=$DATA_DIR/$EXTRA_DAT
 fi
 
