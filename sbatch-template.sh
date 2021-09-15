@@ -143,10 +143,14 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
+if [ -z $EXTRA_DAT ]; then
+    EXTRA_DAT=$DATA_DIR/$EXTRA_DAT
+fi
+
 if which srun; then
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
-        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
+        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
         --cluster tcp://$(hostname):8912 \
@@ -154,7 +158,7 @@ if which srun; then
         --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 else
     echo python ./pya0/utils/transformer.py $TRAINER \
-    $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
+    $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
     --test_file $DATA_DIR/$TEST_FILE --shards_list $DATA_DIR/$SHARDS_LIST \
     --batch_size $DEV_BSIZE --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 fi
