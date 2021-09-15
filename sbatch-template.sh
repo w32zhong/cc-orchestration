@@ -72,14 +72,44 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG="--lr 5e-7"
     ;;
 
-   colbert-)
+   colbert-from-base)
     DEV_BSIZE=5
     SAVE_FOLD=10
 
-    DATA_VER=dE8HMCdMW9PWFXw
+    DATA_VER=m5RWE5D6eBaEaxt
+    START_POINT=bert-base-uncased
+    TOK_CKPOINT=bert-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    EXTRA_DAT=
+    EXTRA_ARG=--active_fp16
+    ;;
+
+   colbert-from-pretrained)
+    DEV_BSIZE=5
+    SAVE_FOLD=10
+
+    DATA_VER=m5RWE5D6eBaEaxt
+    START_POINT=bert-pretrained-for-math-medium
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    EXTRA_DAT=
+    EXTRA_ARG=--active_fp16
+    ;;
+
+   colbert-from-finetuned)
+    DEV_BSIZE=5
+    SAVE_FOLD=10
+
+    DATA_VER=m5RWE5D6eBaEaxt
     START_POINT=bert-finetuned-for-math
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
     EXTRA_DAT=
     EXTRA_ARG=--active_fp16
     ;;
