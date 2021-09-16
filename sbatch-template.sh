@@ -73,7 +73,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    colbert-from-base)
-    DEV_BSIZE=5
+    DEV_BSIZE=4
     SAVE_FOLD=10
 
     DATA_VER=m5RWE5D6eBaEaxt
@@ -87,7 +87,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    colbert-from-pretrained)
-    DEV_BSIZE=5
+    DEV_BSIZE=4
     SAVE_FOLD=10
 
     DATA_VER=m5RWE5D6eBaEaxt
@@ -101,7 +101,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    colbert-from-finetuned)
-    DEV_BSIZE=5
+    DEV_BSIZE=4
     SAVE_FOLD=10
 
     DATA_VER=m5RWE5D6eBaEaxt
@@ -119,6 +119,8 @@ case $TRAINER-${SETUP} in
     exit 1;
     ;;
 esac
+
+date > $TRAINER-${SETUP}.date
 
 #####################
 #   Download Data
