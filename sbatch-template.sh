@@ -48,7 +48,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=8
     SAVE_FOLD=2
 
-    DATA_VER=B3rsLXePamSTTmG
+    DATA_VER=GceiSWS4TSYsySa
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -62,8 +62,8 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=8
     SAVE_FOLD=2
 
-    DATA_VER=B3rsLXePamSTTmG
-    START_POINT=bert-pretrained-for-math-medium
+    DATA_VER=GceiSWS4TSYsySa
+    START_POINT=bert-pretrained-for-math-7ep/6_3_1382/
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
