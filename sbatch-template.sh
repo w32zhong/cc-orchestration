@@ -76,12 +76,12 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=3
     SAVE_FOLD=10
 
-    DATA_VER=m5RWE5D6eBaEaxt
+    DATA_VER=kLtLnwdoCF2DC9Q
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
-    TEST_CYCLE=200
+    TEST_CYCLE=300
     EXTRA_DAT=
     EXTRA_ARG=--active_fp16
     ;;
@@ -90,26 +90,40 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=3
     SAVE_FOLD=10
 
-    DATA_VER=m5RWE5D6eBaEaxt
-    START_POINT=bert-pretrained-for-math-medium
+    DATA_VER=kLtLnwdoCF2DC9Q
+    START_POINT=bert-pretrained-for-math-7ep/6_3_1382/
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
-    TEST_CYCLE=200
+    TEST_CYCLE=300
     EXTRA_DAT=
     EXTRA_ARG=--active_fp16
     ;;
 
-   colbert-from-finetuned)
+   colbert-from-lightly-finetuned)
     DEV_BSIZE=3
     SAVE_FOLD=10
 
-    DATA_VER=m5RWE5D6eBaEaxt
-    START_POINT=bert-finetuned-for-math
+    DATA_VER=kLtLnwdoCF2DC9Q
+    START_POINT=bert-finetuned/1_0_0
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
-    TEST_CYCLE=200
+    TEST_CYCLE=300
+    EXTRA_DAT=
+    EXTRA_ARG=--active_fp16
+    ;;
+
+   colbert-from-heavily-finetuned)
+    DEV_BSIZE=3
+    SAVE_FOLD=10
+
+    DATA_VER=kLtLnwdoCF2DC9Q
+    START_POINT=bert-finetuned/2_5_0
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
     EXTRA_DAT=
     EXTRA_ARG=--active_fp16
     ;;
