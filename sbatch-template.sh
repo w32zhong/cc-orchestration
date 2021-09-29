@@ -12,7 +12,7 @@ set -x
 #####################
 TRAINER=${1-pretrain}
 SETUP=${2}
-CODE_VER=$(cd pya0 && pwd && git rev-parse HEAD)
+CODE_VER=$(test -e pya0 && cd pya0 && pwd && git rev-parse HEAD)
 COMMAND="$0 $@"
 
 EPOCHS=40
@@ -163,7 +163,7 @@ if [ ! -z $EXTRA_DAT ]; then
     EXTRA_DAT=$DATA_DIR/$EXTRA_DAT
 fi
 
-if which srun; then
+if [ -z $DEBUG ]; then
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
@@ -173,7 +173,7 @@ if which srun; then
         --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 else
-    echo python ./pya0/utils/transformer.py $TRAINER \
+    python ./pya0/utils/transformer.py $TRAINER \
     $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
     --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
     --shards_list $DATA_DIR/$SHARDS_LIST \
