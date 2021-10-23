@@ -14,6 +14,7 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
+cd pyserini
 srun --unbuffered python -m pyserini.encode \
 	input --corpus ../msmarco-passage-corpus \
 	encoder --encoder ../encoders/colbert_distil_128 \
