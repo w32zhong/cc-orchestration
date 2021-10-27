@@ -1,6 +1,7 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
+# Further reference: https://github.com/castorini/onboarding/pull/14#issuecomment-903342098
 _libgcc_mutex=0.1=main
 _openmp_mutex=4.5=1_gnu
 _pytorch_select=0.2=gpu_0
@@ -96,7 +97,6 @@ threadpoolctl=2.2.0=pyh0d69192_0
 tk=8.6.11=h1ccaba5_0
 tokenizers=0.10.3=py38_0
 tqdm=4.62.2=pyhd3eb1b0_1
-transformers=4.11.3=py_0
 typing-extensions=3.10.0.2=hd3eb1b0_0
 typing_extensions=3.10.0.2=pyh06a4308_0
 urllib3=1.26.7=pyhd3eb1b0_0
