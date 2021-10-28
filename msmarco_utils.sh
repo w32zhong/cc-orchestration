@@ -15,7 +15,6 @@ function visualize_query_and_hits() {
 	while read line; do
 		docid=$(echo $line | awk '{print $2}')
 		score=$(echo $line | awk '{print $3}')
-		echo "score: $score"
 		cat $COLLECTION | grep "^$docid\\b"
 		cat $QRELS | grep --color "$qid[[:blank:]]0[[:blank:]]$docid"
 		echo '-----'
