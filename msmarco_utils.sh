@@ -38,6 +38,21 @@ case $1 in
 		visualize_query_and_hits $2 $3 $4
 	;;
 
+	query)
+		qid=$2
+		cat $TOPICS | grep "^$qid\\b"
+	;;
+
+	doc)
+		docid=$2
+		cat $COLLECTION | grep "^$docid\\b"
+	;;
+
+	convert)
+		runfile=$2
+		cat $runfile | awk '{print $1 "\t" $3 "\t" $4}' > $runfile.msmacro.run
+	;;
+
 	*)
 		echo "bad args. [eval or debug]"
 	;;
