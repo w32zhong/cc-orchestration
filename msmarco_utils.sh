@@ -54,6 +54,8 @@ case $1 in
 	;;
 
 	*)
-		echo "bad args. [eval or debug]"
+		echo $QRELS
+		echo $COLLECTION
+		echo $TOPICS
 	;;
 esac
