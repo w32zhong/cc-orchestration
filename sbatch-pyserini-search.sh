@@ -1,13 +1,11 @@
 #!/bin/bash
 #SBATCH --nodes=1           # total nodes
-#SBATCH --gres=gpu:1        # how many GPUs per node
+#SBATCH --gres=gpu:t4:1     # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=120gb         # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
-#SBATCH --time=2-02:10      # 2 days and 2 hours and 10 minutes
+#SBATCH --time=2-12:10      # 2 days and 2 hours and 10 minutes
 #SBATCH --output=job-%j-%N.out
 set -x
-N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
-N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
 
 export NCCL_BLOCKING_WAIT=1  # Set this variable to use the NCCL backend
 export SLURM_ACCOUNT=def-jimmylin
