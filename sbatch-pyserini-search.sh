@@ -2,7 +2,7 @@
 #SBATCH --nodes=1           # total nodes
 #SBATCH --gres=gpu:1        # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
-#SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
+#SBATCH --mem=120gb         # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=2-02:10      # 2 days and 2 hours and 10 minutes
 #SBATCH --output=job-%j-%N.out
 set -x
@@ -14,13 +14,17 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
+COMMAND="$0 $@"
+SRCH_RANGE=${1-16_8_16} # or 16_0_8
+
 cd pyserini
 srun --unbuffered python -m pyserini.dsearch \
 	--topics msmarco-passage-dev-subset \
-	--index ../msmarco-passage-index-53609828 \
+	--index ../msmarco-passage-index-53796470 \
 	--encoder ../encoders/colbert_distil_128 \
 	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
-	--output msmarco-passage-$SLURM_JOBID.run
+	--search-range $(echo $SRCH_RANGE | sed -e 's/_/ /g') \
+	--output msmarco-passage-$SLURM_JOBID-$SRCH_RANGE.run
 
 # Other example usages
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
