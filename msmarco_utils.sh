@@ -34,6 +34,13 @@ case $1 in
 		$EVAL $subset_qrels $runfile
 	;;
 
+	stdeval)
+		runfile=$2
+		set -x
+		$EVAL $QRELS $runfile
+		set +x
+	;;
+
 	debug)
 		visualize_query_and_hits $2 $3 $4
 	;;
