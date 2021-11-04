@@ -1,4 +1,4 @@
-QRELS=/home/w32zhong/projects/def-jimmylin/w32zhong/msmarco-passage-collection/qrels.all
+QRELS=/project/6016715/w32zhong/pyserini/tools/topics-and-qrels/qrels.msmarco-passage.dev-subset.txt
 COLLECTION=/project/6016715/w32zhong/msmarco-passage-collection/collection.tsv
 EVAL='python /home/w32zhong/anserini/tools/scripts/msmarco/msmarco_passage_eval.py'
 TOPICS=/project/6016715/w32zhong/msmarco-passage-collection/queries.*.tsv
