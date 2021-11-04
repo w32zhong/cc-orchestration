@@ -41,6 +41,7 @@ ping_all_hosts()
 	ping_host cedar $HOURS
 	ping_host beluga $HOURS
 	ping_host graham $HOURS
+	ping_host narval $HOURS
 }
 
 cancel_job()
@@ -122,4 +123,5 @@ list_all_jobs()
 	list_jobs cedar
 	list_jobs beluga
 	list_jobs graham
+	list_jobs narval
 }
