@@ -1,6 +1,6 @@
 export PYTHONPATH=""
 export PIP_CONFIG_FILE=""
-#conda create --yes --name py38 python=3.8.11
+#conda create --yes --name py38 python=3.7.10
 #conda activate py38
 conda install --yes pytorch=1.8.1 cudatoolkit=10.1 -c pytorch
 pip install faiss-gpu==1.6.5
