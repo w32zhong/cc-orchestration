@@ -13,7 +13,7 @@ export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 COMMAND="$0 $@"
-SRCH_RANGE=${1-20_10_20} # or 20_0_10
+SRCH_RANGE=${1-8_4_8} # or 8_0_4
 
 cd pyserini
 srun --unbuffered python -m pyserini.dsearch \
