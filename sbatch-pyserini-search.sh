@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --nodes=1           # total nodes
-#SBATCH --gres=gpu:t4:1     # how many GPUs per node
+#SBATCH --gres=gpu:a100:1   # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=120gb         # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
-#SBATCH --time=2-12:10      # 2 days and 2 hours and 10 minutes
+#SBATCH --time=1-2:10       # 1 days and 2 hours and 10 minutes
 #SBATCH --output=job-%j-%N.out
 set -x
 
@@ -18,7 +18,8 @@ SRCH_RANGE=${1-20_10_20} # or 20_0_10
 cd pyserini
 srun --unbuffered python -m pyserini.dsearch \
 	--topics msmarco-passage-dev-subset \
-	--index ../msmarco-passage-index-53796470 \
+	--index ../msmarco-passage-index-138014 \
+	--device cuda:0 \
 	--encoder ../encoders/colbert_distil_128 \
 	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
 	--search-range $(echo $SRCH_RANGE | sed -e 's/_/ /g') \
