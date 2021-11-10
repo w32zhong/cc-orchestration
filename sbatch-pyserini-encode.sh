@@ -3,7 +3,7 @@
 #SBATCH --gres=gpu:1        # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=128gb         # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
-#SBATCH --time=2-02:10      # 2 days and 2 hours and 10 minutes
+#SBATCH --time=0-10:10      # 0 days and 10 hours and 10 minutes
 #SBATCH --output=job-%j-%N.out
 set -x
 N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
@@ -15,16 +15,16 @@ export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 cd pyserini
-#srun --unbuffered python -m pyserini.encode \
-#	input --corpus ../msmarco-passage-corpus \
-#	encoder --encoder ../encoders/colbert_distil_128 \
-#	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
-#	--batch 64 --fp16 --device cuda:0 \
-#	output --embeddings ../msmarco-passage-index-$SLURM_JOBID
+srun --unbuffered python -m pyserini.encode \
+	input --corpus ../msmarco-passage-corpus \
+	encoder --encoder ../encoders/colbert_distil_128 \
+	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
+	--batch 90 --fp16 --device cuda:0 \
+	output --embeddings ../msmarco-passage-index-$SLURM_JOBID
 
-srun --unbuffered python -m pyserini.index._colbert \
-	--index_path ../msmarco-passage-index-138014 \
-	--use_gpu=False create_compressed_faiss_index
+#srun --unbuffered python -m pyserini.index._colbert \
+#	--index_path ../msmarco-passage-index-223059 \
+#	--use_gpu=False create_compressed_faiss_index
 
 # Other example usages
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
