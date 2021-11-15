@@ -17,10 +17,24 @@ export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 cd pyserini
 srun --unbuffered python -m pyserini.encode \
 	input --corpus ../msmarco-passage-corpus \
+	encoder --encoder ../encoders/colbert_vanilla_128 \
+	--tokenizer ../encoders/tokenizer-bert-base-uncased \
+	--batch 90 --fp16 --device cuda:0 \
+	output --embeddings /lustre07/scratch/w32zhong/msmarco-passage-index-$SLURM_JOBID
+
+#srun --unbuffered python -m pyserini.encode \
+#	input --corpus ../msmarco-passage-corpus \
+#	encoder --encoder ../encoders/colbert_distil_128 \
+#	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
+#	--batch 90 --fp16 --device cuda:0 \
+#	output --embeddings /lustre07/scratch/w32zhong/msmarco-passage-index-$SLURM_JOBID
+
+echo python -m pyserini.encode \
+	input --corpus ../msmarco-passage-debugcorpus \
 	encoder --encoder ../encoders/colbert_distil_128 \
 	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
-	--batch 90 --fp16 --device cuda:0 \
-	output --embeddings ../msmarco-passage-index-$SLURM_JOBID
+	--batch 1 --fp16 --device cuda:0 \
+	output --embeddings /lustre07/scratch/w32zhong/msmarco-passage-index-debug
 
 #srun --unbuffered python -m pyserini.index._colbert \
 #	--index_path ../msmarco-passage-index-223059 \
