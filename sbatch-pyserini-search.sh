@@ -32,8 +32,8 @@ echo python -m pyserini.dsearch \
 	--topics msmarco-passage-dev-subset \
 	--index /lustre07/scratch/w32zhong/msmarco-passage-index-debug \
 	--device cuda:0 \
-	--encoder ../encoders/colbert_distil_128 \
-	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
+	--encoder ../encoders/colbert_vanilla_128 \
+	--tokenizer ../encoders/tokenizer-bert-base-uncased \
 	--output msmarco-passage-debug.run
 
 # Other example usages

@@ -31,8 +31,8 @@ srun --unbuffered python -m pyserini.encode \
 
 echo python -m pyserini.encode \
 	input --corpus ../msmarco-passage-debugcorpus \
-	encoder --encoder ../encoders/colbert_distil_128 \
-	--tokenizer ../encoders/tokenizer-distilbert-base-uncased \
+	encoder --encoder ../encoders/colbert_vanilla_128 \
+	--tokenizer ../encoders/tokenizer-bert-base-uncased \
 	--batch 1 --fp16 --device cuda:0 \
 	output --embeddings /lustre07/scratch/w32zhong/msmarco-passage-index-debug
 
