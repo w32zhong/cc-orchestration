@@ -3,7 +3,7 @@
 #SBATCH --gres=gpu:2        # how many GPUs per node
 #SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
-#SBATCH --time=4-02:10      # 4 days and 2 hours and 10 minutes
+#SBATCH --time=5-02:10      # 5 days and 2 hours and 10 minutes
 #SBATCH --output=job-%j-%N.out
 set -x
 
@@ -19,7 +19,7 @@ EPOCHS=40
 TEST_CYCLE=100
 case $TRAINER-${SETUP} in
    pretrain-from-scratch)
-    DEV_BSIZE=8
+    DEV_BSIZE=30
     SAVE_FOLD=1
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -28,11 +28,11 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards-for-scratch.txt
     TEST_FILE=test.txt
     EXTRA_DAT=mse-aops-2021-vocab.pkl
-    EXTRA_ARG="--lr 1e-4"
+    #EXTRA_ARG="--lr 1e-4"
     ;;
 
    pretrain-for-newvocab)
-    DEV_BSIZE=8
+    DEV_BSIZE=30
     SAVE_FOLD=2
 
     DATA_VER=arjmPWtGwzKrkmR
@@ -163,25 +163,16 @@ if [ ! -z $EXTRA_DAT ]; then
     EXTRA_DAT=$DATA_DIR/$EXTRA_DAT
 fi
 
-if [ -z $DEBUG ]; then
-    srun --unbuffered \
-        python ./pya0/utils/transformer.py $TRAINER \
-        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
-        --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
-        --shards_list $DATA_DIR/$SHARDS_LIST \
-        --cluster tcp://$(hostname):8912 \
-        --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
-        --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
-else
+srun --unbuffered \
     python ./pya0/utils/transformer.py $TRAINER \
     $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
     --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
     --shards_list $DATA_DIR/$SHARDS_LIST \
-    --batch_size $DEV_BSIZE --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
-fi
+    --cluster tcp://$(hostname):8912 \
+    --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
+    --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 
 # Other example usages
-#srun python pytorch-test-v2.py tcp://$(hostname):8921
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
 #srun --jobid 12345 --pty bash
 #
