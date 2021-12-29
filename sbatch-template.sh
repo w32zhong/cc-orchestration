@@ -73,10 +73,10 @@ case $TRAINER-${SETUP} in
     ;;
 
    finetune-using-newdata)
-    DEV_BSIZE=30
+    DEV_BSIZE=16
     SAVE_FOLD=2
 
-    DATA_VER=new
+    DATA_VER=aMGYy47dPPXbQm6
     START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
