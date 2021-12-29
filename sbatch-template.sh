@@ -73,7 +73,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    finetune-using-newdata)
-    DEV_BSIZE=16
+    DEV_BSIZE=8
     SAVE_FOLD=2
 
     DATA_VER=aMGYy47dPPXbQm6
@@ -169,6 +169,10 @@ N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
 N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
 
 export NCCL_BLOCKING_WAIT=1  # Set this variable to use the NCCL backend
+export NCCL_IB_DISABLE=1
+export NCCL_DEBUG=INFO
+export NCCL_P2P_DISABLE=1
+
 export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
