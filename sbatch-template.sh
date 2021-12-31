@@ -86,6 +86,20 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG="--lr 5e-7"
     ;;
 
+   tag_prediction-using-newdata)
+    DEV_BSIZE=8
+    SAVE_FOLD=2
+
+    DATA_VER=aMGYy47dPPXbQm6
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
+    EXTRA_ARG="--lr 2e-6"
+    ;;
+
    colbert-from-base)
     DEV_BSIZE=3
     SAVE_FOLD=10
