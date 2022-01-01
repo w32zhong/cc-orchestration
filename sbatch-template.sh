@@ -142,6 +142,20 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=--active_fp16
     ;;
 
+   dpr-on-basilisk-using-old-data-model)
+    DEV_BSIZE=16
+    SAVE_FOLD=6
+
+    DATA_VER=LNE6tiZpJasCcyb
+    START_POINT=bert-finetuned/2_5_0
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    EXTRA_DAT=
+    EXTRA_ARG='--dev_map 0,1'
+    ;;
+
    *)
     echo "[Bad args] $COMMAND"
     exit 1;
@@ -177,14 +191,23 @@ if [ ! -z $EXTRA_DAT ]; then
     EXTRA_DAT=$DATA_DIR/$EXTRA_DAT
 fi
 
-srun --unbuffered \
+if which srun; then
+    srun --unbuffered \
+        python ./pya0/utils/transformer.py $TRAINER \
+        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
+        --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
+        --shards_list $DATA_DIR/$SHARDS_LIST \
+        --cluster tcp://$(hostname):8912 \
+        --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
+        --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
+else
     python ./pya0/utils/transformer.py $TRAINER \
-    $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
-    --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
-    --shards_list $DATA_DIR/$SHARDS_LIST \
-    --cluster tcp://$(hostname):8912 \
-    --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
-    --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
+        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
+        --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
+        --shards_list $DATA_DIR/$SHARDS_LIST \
+        --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
+        --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
+fi;
 
 # Other example usages
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
