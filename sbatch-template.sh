@@ -171,15 +171,15 @@ case $TRAINER-${SETUP} in
     ;;
 
    dpr-on-basilisk-using-new-data-model)
-    DEV_BSIZE=32
-    SAVE_FOLD=4
+    DEV_BSIZE=36
+    SAVE_FOLD=1
 
     DATA_VER=kYsYFf5JbdbZFda
     START_POINT=tag-predictor-8-6-7642
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
-    TEST_CYCLE=200
+    TEST_CYCLE=300
     EXTRA_DAT=
     EXTRA_ARG='--dev_map 0,1 --math_keywords_file ./math_keywords.pkl --lr 3e-5'
     ;;
