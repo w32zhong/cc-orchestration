@@ -212,6 +212,34 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=
     ;;
 
+   dpr-on-v100-using-pretrained-model)
+    DEV_BSIZE=4
+    SAVE_FOLD=2
+
+    DATA_VER=kYsYFf5JbdbZFda
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    EXTRA_DAT=
+    EXTRA_ARG=
+    ;;
+
+   dpr-on-v100-using-finetuned-model)
+    DEV_BSIZE=4
+    SAVE_FOLD=2
+
+    DATA_VER=kYsYFf5JbdbZFda
+    START_POINT=tag-predictor-8-6-7642
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    EXTRA_DAT=
+    EXTRA_ARG=
+    ;;
+
    *)
     echo "[Bad args] $COMMAND"
     exit 1;
