@@ -175,7 +175,7 @@ case $TRAINER-${SETUP} in
     SAVE_FOLD=2
 
     DATA_VER=kYsYFf5JbdbZFda
-    START_POINT=bert-pretrained-for-math-7ep-3.5b
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
