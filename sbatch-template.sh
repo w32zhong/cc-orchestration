@@ -157,8 +157,8 @@ case $TRAINER-${SETUP} in
     ;;
 
    dpr-on-basilisk-using-old-data-model)
-    DEV_BSIZE=16
-    SAVE_FOLD=6
+    DEV_BSIZE=32
+    SAVE_FOLD=4
 
     DATA_VER=LNE6tiZpJasCcyb
     START_POINT=bert-finetuned/2_5_0
@@ -168,6 +168,20 @@ case $TRAINER-${SETUP} in
     TEST_CYCLE=200
     EXTRA_DAT=
     EXTRA_ARG='--dev_map 0,1'
+    ;;
+
+   dpr-on-basilisk-using-new-data-model)
+    DEV_BSIZE=32
+    SAVE_FOLD=4
+
+    DATA_VER=kYsYFf5JbdbZFda
+    START_POINT=tag-predictor-8-6-7642
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    EXTRA_DAT=
+    EXTRA_ARG='--dev_map 0,1 --math_keywords_file ./math_keywords.pkl'
     ;;
 
    dpr-on-narval-using-pretrained-model)
@@ -251,7 +265,7 @@ else
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
-        --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
+        --batch_size $DEV_BSIZE \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 fi;
 
