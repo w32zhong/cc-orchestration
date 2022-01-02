@@ -198,7 +198,7 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=
     ;;
 
-   dpr-on-narval-using-pretrained-model-v100)
+   dpr-on-v100-using-pretrained-model)
     DEV_BSIZE=4
     SAVE_FOLD=2
 
@@ -212,7 +212,7 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=
     ;;
 
-   dpr-on-narval-using-finetuned-model-v100)
+   dpr-on-v100-using-finetuned-model)
     DEV_BSIZE=4
     SAVE_FOLD=2
 
