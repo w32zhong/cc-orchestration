@@ -72,7 +72,7 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG="--lr 5e-7"
     ;;
 
-   finetune-using-newdata)
+   tag_prediction-direct)
     DEV_BSIZE=8
     SAVE_FOLD=2
 
@@ -82,11 +82,12 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
-    EXTRA_ARG="--lr 5e-7"
+    EXTRA_DAT="mse-aops-2021-data.pkl.tags.ids direct"
+    #EXTRA_ARG="--lr 2e-6 --dev_map 2"
+    EXTRA_ARG="--lr 2e-6 --dev_map 2 --debug"
     ;;
 
-   tag_prediction-using-newdata)
+   tag_prediction-variational)
     DEV_BSIZE=8
     SAVE_FOLD=2
 
@@ -96,8 +97,9 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
-    EXTRA_ARG="--lr 2e-6"
+    EXTRA_DAT="mse-aops-2021-data.pkl.tags.ids variational"
+    EXTRA_ARG="--lr 2e-4 --dev_map 2"
+    #EXTRA_ARG="--lr 2e-4 --dev_map 2 --debug"
     ;;
 
    colbert-from-base)
@@ -275,14 +277,10 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-if [ ! -z $EXTRA_DAT ]; then
-    EXTRA_DAT=$DATA_DIR/$EXTRA_DAT
-fi
-
 if which srun; then
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
-        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
+        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
         --cluster tcp://$(hostname):8912 \
@@ -290,7 +288,7 @@ if which srun; then
         --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
 else
     python ./pya0/utils/transformer.py $TRAINER \
-        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $EXTRA_DAT \
+        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
         --batch_size $DEV_BSIZE \
