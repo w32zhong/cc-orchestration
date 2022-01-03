@@ -181,7 +181,7 @@ case $TRAINER-${SETUP} in
     TEST_FILE=test.txt
     TEST_CYCLE=300
     EXTRA_DAT=
-    EXTRA_ARG='--dev_map 0,1 --math_keywords_file ./math_keywords.pkl --lr 3e-5'
+    EXTRA_ARG='--dev_map 0,1 --math_keywords_file ./math_keywords.pkl --lr 3e-6'
     ;;
 
    dpr-on-narval-using-pretrained-model)
