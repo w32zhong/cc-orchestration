@@ -88,20 +88,17 @@ case $TRAINER-${SETUP} in
     ;;
 
    tag_prediction-variational)
-    DEV_BSIZE=100
-    #DEV_BSIZE=50
+    DEV_BSIZE=16
     SAVE_FOLD=2
 
     DATA_VER=aMGYy47dPPXbQm6
-    #START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921
-    START_POINT=tag-predictor-tmp
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
     EXTRA_DAT="mse-aops-2021-data.pkl.tags.ids variational"
-    EXTRA_ARG="--lr 2e-6 --dev_map 0,1"
-    #EXTRA_ARG="--lr 2e-6 --dev_map 1 --debug"
+    EXTRA_ARG="--lr 2e-5 --dev_map 2"
     ;;
 
    colbert-from-base)
@@ -179,7 +176,7 @@ case $TRAINER-${SETUP} in
     SAVE_FOLD=1
 
     DATA_VER=kYsYFf5JbdbZFda
-    START_POINT=tag-predictor-8-6-7642
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921/
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
