@@ -88,7 +88,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    tag_prediction-variational)
-    DEV_BSIZE=16
+    DEV_BSIZE=25
     SAVE_FOLD=2
 
     DATA_VER=aMGYy47dPPXbQm6
@@ -98,6 +98,7 @@ case $TRAINER-${SETUP} in
     TEST_FILE=test.txt
     TEST_CYCLE=200
     EXTRA_DAT="mse-aops-2021-data.pkl.tags.ids variational"
+    #EXTRA_ARG="--lr 2e-5 --dev_map 2 --debug"
     EXTRA_ARG="--lr 2e-5 --dev_map 2"
     ;;
 
