@@ -27,8 +27,8 @@ case $TRAINER-${SETUP} in
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards-for-scratch.txt
     TEST_FILE=test.txt
-    EXTRA_DAT=mse-aops-2021-vocab.pkl
-    #EXTRA_ARG="--lr 1e-4"
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab.pkl"
+    #TRAINER_ARGS="--lr 1e-4"
     ;;
 
    pretrain-for-newvocab)
@@ -40,8 +40,8 @@ case $TRAINER-${SETUP} in
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards-for-newvocab.txt
     TEST_FILE=test.txt
-    EXTRA_DAT=mse-aops-2021-vocab.pkl
-    EXTRA_ARG=
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab.pkl"
+    TRAINER_ARGS=
     ;;
 
    finetune-from-base)
@@ -54,8 +54,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
-    EXTRA_ARG="--lr 5e-7"
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-data.pkl.tags.ids"
+    TRAINER_ARGS="--lr 5e-7"
     ;;
 
    finetune-from-pretrained)
@@ -68,8 +68,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=mse-aops-2021-data.pkl.tags.ids
-    EXTRA_ARG="--lr 5e-7"
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-data.pkl.tags.ids"
+    TRAINER_ARGS="--lr 5e-7"
     ;;
 
    tag_prediction-direct)
@@ -82,9 +82,9 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT="mse-aops-2021-data.pkl.tags.ids direct"
-    EXTRA_ARG="--lr 2e-6 --dev_map 2"
-    #EXTRA_ARG="--lr 2e-6 --dev_map 2 --debug"
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-data.pkl.tags.ids direct"
+    TRAINER_ARGS="--lr 2e-6 --dev_map 2"
+    #TRAINER_ARGS="--lr 2e-6 --dev_map 2 --debug"
     ;;
 
    tag_prediction-variational)
@@ -97,9 +97,9 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT="mse-aops-2021-data.pkl.tags.ids variational"
-    #EXTRA_ARG="--lr 2e-5 --dev_map 2 --debug"
-    EXTRA_ARG="--lr 2e-5 --dev_map 2"
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-data.pkl.tags.ids variational"
+    #TRAINER_ARGS="--lr 2e-5 --dev_map 2 --debug"
+    TRAINER_ARGS="--lr 2e-5 --dev_map 2"
     ;;
 
    colbert-from-base)
@@ -112,8 +112,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
-    EXTRA_DAT=
-    EXTRA_ARG=--active_fp16
+    CALL_ARGS=
+    TRAINER_ARGS=--active_fp16
     ;;
 
    colbert-from-pretrained)
@@ -126,8 +126,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
-    EXTRA_DAT=
-    EXTRA_ARG=--active_fp16
+    CALL_ARGS=
+    TRAINER_ARGS=--active_fp16
     ;;
 
    colbert-from-lightly-finetuned)
@@ -140,8 +140,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
-    EXTRA_DAT=
-    EXTRA_ARG=--active_fp16
+    CALL_ARGS=
+    TRAINER_ARGS=--active_fp16
     ;;
 
    colbert-from-heavily-finetuned)
@@ -154,11 +154,25 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
-    EXTRA_DAT=
-    EXTRA_ARG=--active_fp16
+    CALL_ARGS=
+    TRAINER_ARGS=--active_fp16
     ;;
 
-   colbert-on-narval-v2)
+   colbert-on-graham-v2) # very likely p100 (12GB)
+    DEV_BSIZE=6
+    SAVE_FOLD=1
+
+    DATA_VER=kYsYFf5JbdbZFda
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921/
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    CALL_ARGS=
+    TRAINER_ARGS=--active_fp16
+    ;;
+
+   colbert-on-narval-v2) # a100 (40GB)
     DEV_BSIZE=25
     SAVE_FOLD=1
 
@@ -167,9 +181,9 @@ case $TRAINER-${SETUP} in
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
-    TEST_CYCLE=300
-    EXTRA_DAT=
-    EXTRA_ARG=--active_fp16
+    TEST_CYCLE=200
+    CALL_ARGS=
+    TRAINER_ARGS=--active_fp16
     ;;
 
    dpr-on-basilisk-using-old-data-model)
@@ -182,8 +196,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=
-    EXTRA_ARG='--dev_map 0,1'
+    CALL_ARGS=
+    TRAINER_ARGS='--dev_map 0,1'
     ;;
 
    dpr-on-basilisk-using-new-data-model)
@@ -196,8 +210,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
-    EXTRA_DAT=
-    EXTRA_ARG='--dev_map 0,1 --math_keywords_file ./math_keywords.pkl --lr 3e-6'
+    CALL_ARGS=
+    TRAINER_ARGS='--dev_map 0,1 --math_keywords_file ./math_keywords.pkl --lr 3e-6'
     ;;
 
    dpr-on-narval-using-pretrained-model)
@@ -210,8 +224,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=
-    EXTRA_ARG=
+    CALL_ARGS=
+    TRAINER_ARGS=
     ;;
 
    dpr-on-narval-using-finetuned-model)
@@ -224,8 +238,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=
-    EXTRA_ARG=
+    CALL_ARGS=
+    TRAINER_ARGS=
     ;;
 
    dpr-on-v100-using-pretrained-model)
@@ -238,8 +252,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=
-    EXTRA_ARG=
+    CALL_ARGS=
+    TRAINER_ARGS=
     ;;
 
    dpr-on-v100-using-finetuned-model)
@@ -252,8 +266,8 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    EXTRA_DAT=
-    EXTRA_ARG=
+    CALL_ARGS=
+    TRAINER_ARGS=
     ;;
 
    *)
@@ -294,19 +308,19 @@ export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 if which srun; then
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
-        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
+        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $CALL_ARGS \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
         --cluster tcp://$(hostname):8912 \
         --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
-        --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
+        --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS
 else
     python ./pya0/utils/transformer.py $TRAINER \
-        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $DATA_DIR/$EXTRA_DAT \
+        $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $CALL_ARGS \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
         --batch_size $DEV_BSIZE \
-        --save_fold $SAVE_FOLD --epochs $EPOCHS $EXTRA_ARG
+        --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS
 fi;
 
 # Other example usages
