@@ -158,6 +158,20 @@ case $TRAINER-${SETUP} in
     EXTRA_ARG=--active_fp16
     ;;
 
+   colbert-on-narval-v2)
+    DEV_BSIZE=25
+    SAVE_FOLD=1
+
+    DATA_VER=kYsYFf5JbdbZFda
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921/
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    EXTRA_DAT=
+    EXTRA_ARG=--active_fp16
+    ;;
+
    dpr-on-basilisk-using-old-data-model)
     DEV_BSIZE=32
     SAVE_FOLD=4
