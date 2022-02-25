@@ -186,6 +186,20 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=--active_fp16
     ;;
 
+   colbert-on-basilisk-v2) # a6000 (48GB)
+    DEV_BSIZE=60
+    SAVE_FOLD=1
+
+    DATA_VER=kYsYFf5JbdbZFda
+    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921/
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=200
+    CALL_ARGS=
+    TRAINER_ARGS='--dev_map 0,1 --active_fp16'
+    ;;
+
    dpr-on-basilisk-using-old-data-model)
     DEV_BSIZE=32
     SAVE_FOLD=4
