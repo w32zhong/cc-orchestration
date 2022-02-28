@@ -117,8 +117,8 @@ case $TRAINER-${SETUP} in
     ;;
 
    colbert-from-pretrained)
-    DEV_BSIZE=3
-    SAVE_FOLD=10
+    DEV_BSIZE=6
+    SAVE_FOLD=1
 
     DATA_VER=LNE6tiZpJasCcyb
     START_POINT=bert-pretrained-for-math-7ep/6_3_1382/
@@ -127,12 +127,12 @@ case $TRAINER-${SETUP} in
     TEST_FILE=test.txt
     TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS=--active_fp16
+    TRAINER_ARGS='--dev_map 0,1 --active_fp16'
     ;;
 
    colbert-from-lightly-finetuned)
-    DEV_BSIZE=3
-    SAVE_FOLD=10
+    DEV_BSIZE=6
+    SAVE_FOLD=1
 
     DATA_VER=LNE6tiZpJasCcyb
     START_POINT=bert-finetuned/1_0_0
@@ -141,12 +141,12 @@ case $TRAINER-${SETUP} in
     TEST_FILE=test.txt
     TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS=--active_fp16
+    TRAINER_ARGS='--dev_map 0,1 --active_fp16'
     ;;
 
    colbert-from-heavily-finetuned)
-    DEV_BSIZE=3
-    SAVE_FOLD=10
+    DEV_BSIZE=6
+    SAVE_FOLD=1
 
     DATA_VER=LNE6tiZpJasCcyb
     START_POINT=bert-finetuned/2_5_0
@@ -155,7 +155,7 @@ case $TRAINER-${SETUP} in
     TEST_FILE=test.txt
     TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS=--active_fp16
+    TRAINER_ARGS='--dev_map 0,1 --active_fp16'
     ;;
 
    colbert-on-graham-v2) # very likely p100 (12GB)
@@ -220,6 +220,20 @@ case $TRAINER-${SETUP} in
 
     DATA_VER=kYsYFf5JbdbZFda
     START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921/
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS='--dev_map 0,1 --math_keywords_file ./math_keywords.pkl --lr 3e-6'
+    ;;
+
+   dpr-on-basilisk-using-new-data-model-from-scratch)
+    DEV_BSIZE=36
+    SAVE_FOLD=1
+
+    DATA_VER=kYsYFf5JbdbZFda
+    START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
