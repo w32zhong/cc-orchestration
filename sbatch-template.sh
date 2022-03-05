@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --nodes=4           # total nodes
-#SBATCH --gres=gpu:2        # how many GPUs per node
-#SBATCH --cpus-per-task=4   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
+#SBATCH --nodes=1           # total nodes
+#SBATCH --gres=gpu:1        # how many GPUs per node
+#SBATCH --cpus-per-task=2   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
-#SBATCH --time=4-02:10      # 4 days and 2 hours and 10 minutes
+#SBATCH --time=2-02:10      # days-hours:minutes
 #SBATCH --output=job-%j-%N.out
 set -x
 
