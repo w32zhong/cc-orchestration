@@ -379,14 +379,15 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-if which srun; then
+TOTAL_N=$(($N_NODE * $N_GPUS))
+if which srun && [ $TOTAL_N -gt 1 ]; then
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $CALL_ARGS \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
         --cluster tcp://$(hostname):8912 \
-        --batch_size $(($N_NODE * $N_GPUS * $DEV_BSIZE)) \
+        --batch_size $(($TOTAL_N * $DEV_BSIZE)) \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS
 else
     python ./pya0/utils/transformer.py $TRAINER \
