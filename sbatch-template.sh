@@ -15,7 +15,7 @@ SETUP=${2}
 CODE_VER=$(test -e pya0 && cd pya0 && pwd && git rev-parse HEAD)
 COMMAND="$0 $@"
 
-EPOCHS=40
+EPOCHS=10
 TEST_CYCLE=100
 case $TRAINER-${SETUP} in
    pretrain-from-scratch)
@@ -284,32 +284,64 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=
     ;;
 
-   dpr-on-v100-using-pretrained-model)
-    DEV_BSIZE=4
-    SAVE_FOLD=2
+   dpr-from-vanilla-backbone-v3-on-narval)
+    EPOCHS=8
+    DEV_BSIZE=16
+    SAVE_FOLD=1
 
-    DATA_VER=kYsYFf5JbdbZFda
-    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921
-    TOK_CKPOINT=bert-tokenizer-for-math
+    DATA_VER=pHoLt8iLSrkD3XB
+    START_POINT=bert-base-uncased
+    TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
-    TEST_CYCLE=200
+    TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS=
+    TRAINER_ARGS='--lr 3e-6'
     ;;
 
-   dpr-on-v100-using-finetuned-model)
-    DEV_BSIZE=4
-    SAVE_FOLD=2
+   dpr-from-3ep-pretrained-v3-on-narval)
+    EPOCHS=8
+    DEV_BSIZE=16
+    SAVE_FOLD=1
 
-    DATA_VER=kYsYFf5JbdbZFda
-    START_POINT=tag-predictor-8-6-7642
+    DATA_VER=pHoLt8iLSrkD3XB
+    START_POINT=bert-pretrained-for-math/3-1-0
     TOK_CKPOINT=bert-tokenizer-for-math
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
-    TEST_CYCLE=200
+    TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS=
+    TRAINER_ARGS='--lr 3e-6'
+    ;;
+
+   dpr-from-7ep-pretrained-v3-on-narval)
+    EPOCHS=8
+    DEV_BSIZE=16
+    SAVE_FOLD=1
+
+    DATA_VER=pHoLt8iLSrkD3XB
+    START_POINT=bert-pretrained-for-math/7-5-921
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS='--lr 3e-6'
+    ;;
+
+   dpr-from-scibert-v3-on-narval)
+    EPOCHS=8
+    DEV_BSIZE=16
+    SAVE_FOLD=1
+
+    DATA_VER=pHoLt8iLSrkD3XB
+    START_POINT=scibert_model
+    TOK_CKPOINT=scibert_tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS='--lr 3e-6'
     ;;
 
    *)
