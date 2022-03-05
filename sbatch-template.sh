@@ -286,7 +286,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-vanilla-backbone-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=16
+    DEV_BSIZE=15
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -301,7 +301,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-3ep-pretrained-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=16
+    DEV_BSIZE=15
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -316,7 +316,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-7ep-pretrained-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=16
+    DEV_BSIZE=15
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -331,7 +331,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-scibert-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=16
+    DEV_BSIZE=15
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
