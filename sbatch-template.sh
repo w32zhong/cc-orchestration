@@ -344,6 +344,21 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS='--lr 3e-6'
     ;;
 
+   dpr-from-azbert-v3-on-narval)
+    EPOCHS=8
+    DEV_BSIZE=15
+    SAVE_FOLD=1
+
+    DATA_VER=gqstFZmWHCLGXe3
+    START_POINT=bert-pretrained-for-math-7ep/6_3_1382
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS='--lr 3e-6'
+    ;;
+
    *)
     echo "[Bad args] $COMMAND"
     exit 1;
