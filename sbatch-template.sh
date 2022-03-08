@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --nodes=1           # total nodes
-#SBATCH --gres=gpu:1        # how many GPUs per node
+#SBATCH --nodes=2           # total nodes
+#SBATCH --gres=gpu:2        # how many GPUs per node
 #SBATCH --cpus-per-task=2   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
-#SBATCH --time=2-02:10      # days-hours:minutes
+#SBATCH --time=3-02:10      # days-hours:minutes
 #SBATCH --output=job-%j-%N.out
 set -x
 
@@ -286,7 +286,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-vanilla-backbone-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=15
+    DEV_BSIZE=14
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -301,7 +301,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-3ep-pretrained-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=15
+    DEV_BSIZE=14
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -316,7 +316,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-7ep-pretrained-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=15
+    DEV_BSIZE=14
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -331,7 +331,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-scibert-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=15
+    DEV_BSIZE=14
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -346,7 +346,7 @@ case $TRAINER-${SETUP} in
 
    dpr-from-azbert-v3-on-narval)
     EPOCHS=8
-    DEV_BSIZE=15
+    DEV_BSIZE=14
     SAVE_FOLD=1
 
     DATA_VER=gqstFZmWHCLGXe3
