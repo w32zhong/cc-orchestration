@@ -9,12 +9,12 @@ set -x
 
 N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
 N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
-if [ -z $N_GPUS ]; then
+if [ -z "$N_GPUS" ]; then
     N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:).+:[0-9]+')
     N_GPUS=$(echo $N_GPUS | cut -f 2 -d':')
 fi
 
-if [ -z $N_GPUS || -z $N_NODE ]; then
+if [ -z "$N_GPUS" || -z "$N_NODE" ]; then
     echo "No value in: num_node=$N_NODE, num_gpu=$N_GPUS"
     exit 1
 else
@@ -186,9 +186,9 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=
     ;;
 
-   dpr-from-vanilla-backbone-v3-on-narval)
+   dpr-from-vanilla-backbone-v3-on-v100)
     EPOCHS=8
-    DEV_BSIZE=14
+    DEV_BSIZE=8
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -216,9 +216,9 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS='--lr 3e-6'
     ;;
 
-   dpr-from-7ep-pretrained-v3-on-narval)
+   dpr-from-7ep-pretrained-v3-on-v100)
     EPOCHS=8
-    DEV_BSIZE=14
+    DEV_BSIZE=8
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
@@ -246,9 +246,9 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS='--lr 3e-6'
     ;;
 
-   dpr-from-azbert-v3-on-narval)
+   dpr-from-azbert-v3-on-v100)
     EPOCHS=8
-    DEV_BSIZE=14
+    DEV_BSIZE=8
     SAVE_FOLD=1
 
     DATA_VER=gqstFZmWHCLGXe3
