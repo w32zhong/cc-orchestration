@@ -1,11 +1,25 @@
 #!/bin/bash
 #SBATCH --nodes=2           # total nodes
-#SBATCH --gres=gpu:2        # how many GPUs per node
+#SBATCH --gres=gpu:v100l:2  # how many GPUs per node
 #SBATCH --cpus-per-task=2   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=3-02:10      # days-hours:minutes
 #SBATCH --output=job-%j-%N.out
 set -x
+
+N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
+N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
+if [ -z $N_GPUS ]; then
+    N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:).+:[0-9]+')
+    N_GPUS=$(echo $N_GPUS | cut -f 2 -d':')
+fi
+
+if [ -z $N_GPUS || -z $N_NODE ]; then
+    echo "No value in: num_node=$N_NODE, num_gpu=$N_GPUS"
+    exit 1
+else
+    echo "num_node=$N_NODE, num_gpu=$N_GPUS"
+fi
 
 #####################
 #  Configuration
@@ -270,9 +284,6 @@ set +e
 #####################
 #   Run SLURM Job
 #####################
-N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
-N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
-
 export NCCL_BLOCKING_WAIT=1  # Set this variable to use the NCCL backend
 export NCCL_IB_DISABLE=1
 export NCCL_DEBUG=INFO
