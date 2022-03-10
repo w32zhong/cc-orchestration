@@ -6,20 +6,7 @@
 #SBATCH --time=3-02:10      # days-hours:minutes
 #SBATCH --output=job-%j-%N.out
 set -x
-
-N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
-N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
-if [ -z "$N_GPUS" ]; then
-    N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:).+:[0-9]+')
-    N_GPUS=$(echo $N_GPUS | cut -f 2 -d':')
-fi
-
-if [ -z "$N_GPUS" || -z "$N_NODE" ]; then
-    echo "No value in: num_node=$N_NODE, num_gpu=$N_GPUS"
-    exit 1
-else
-    echo "num_node=$N_NODE, num_gpu=$N_GPUS"
-fi
+date
 
 #####################
 #  Configuration
@@ -267,7 +254,22 @@ case $TRAINER-${SETUP} in
     ;;
 esac
 
-date > $TRAINER-${SETUP}.date
+######################################
+#   Extract Slurm Header Arguments
+######################################
+N_NODE=$(cat $0 | grep -Po '(?<=SBATCH --nodes=)[0-9]+')
+N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:)[0-9]+')
+if [ -z "$N_GPUS" ]; then
+    N_GPUS=$(cat $0 | grep -Po '(?<=SBATCH --gres=gpu:).+:[0-9]+')
+    N_GPUS=$(echo $N_GPUS | cut -f 2 -d':')
+fi
+
+if [ -z "$N_GPUS" -o -z "$N_NODE" ]; then
+    echo "No value in: num_node=$N_NODE, num_gpu=$N_GPUS"
+    exit 1
+else
+    echo "num_node=$N_NODE, num_gpu=$N_GPUS"
+fi
 
 #####################
 #   Download Data
