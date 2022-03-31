@@ -117,7 +117,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=--active_fp16
     ;;
 
-   colbert-on-narval-v2) # a100 (40GB)
+   colbert-on-narval-v2-128) # a100 (40GB)
     DEV_BSIZE=25
     SAVE_FOLD=1
 
@@ -127,7 +127,37 @@ case $TRAINER-${SETUP} in
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=200
-    CALL_ARGS=
+    CALL_ARGS="128" # qmax
+    TRAINER_ARGS=--active_fp16
+    ;;
+
+   colbert-on-narval-v3)
+    EPOCHS=16
+    DEV_BSIZE=20
+    SAVE_FOLD=1
+
+    DATA_VER=pHoLt8iLSrkD3XB
+    START_POINT=bert-pretrained-for-math/7-5-921
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS="512" # qmax
+    TRAINER_ARGS=--active_fp16
+    ;;
+
+   colbert-on-v100-v3)
+    EPOCHS=8
+    DEV_BSIZE=8
+    SAVE_FOLD=1
+
+    DATA_VER=pHoLt8iLSrkD3XB
+    START_POINT=bert-pretrained-for-math/7-5-921
+    TOK_CKPOINT=bert-tokenizer-for-math
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS="512" # qmax
     TRAINER_ARGS=--active_fp16
     ;;
 
