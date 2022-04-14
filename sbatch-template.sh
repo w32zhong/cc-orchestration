@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=2           # total nodes
-#SBATCH --gres=gpu:v100l:2  # how many GPUs per node
+#SBATCH --gres=gpu:2        # how many GPUs per node
 #SBATCH --cpus-per-task=2   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
 #SBATCH --time=3-02:10      # days-hours:minutes
@@ -103,22 +103,8 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS="--lr 2e-5 --dev_map 2"
     ;;
 
-   colbert-from-base)
-    DEV_BSIZE=3
-    SAVE_FOLD=10
-
-    DATA_VER=LNE6tiZpJasCcyb
-    START_POINT=bert-base-uncased
-    TOK_CKPOINT=bert-tokenizer
-    SHARDS_LIST=shards.txt
-    TEST_FILE=test.txt
-    TEST_CYCLE=300
-    CALL_ARGS=
-    TRAINER_ARGS=--active_fp16
-    ;;
-
-   colbert-on-narval-v2-128) # a100 (40GB)
-    DEV_BSIZE=25
+   colbert-on-narval-v2-128)
+    DEV_BSIZE=15 # A100 maximum capacity
     SAVE_FOLD=1
 
     DATA_VER=kYsYFf5JbdbZFda
@@ -132,23 +118,8 @@ case $TRAINER-${SETUP} in
     ;;
 
    colbert-on-narval-v3)
-    EPOCHS=16
-    DEV_BSIZE=20
-    SAVE_FOLD=1
-
-    DATA_VER=pHoLt8iLSrkD3XB
-    START_POINT=bert-pretrained-for-math/7-5-921
-    TOK_CKPOINT=bert-tokenizer-for-math
-    SHARDS_LIST=shards.txt
-    TEST_FILE=test.txt
-    TEST_CYCLE=300
-    CALL_ARGS="512" # qmax
-    TRAINER_ARGS=--active_fp16
-    ;;
-
-   colbert-on-v100-v3)
-    EPOCHS=8
-    DEV_BSIZE=8
+    EPOCHS=9
+    DEV_BSIZE=15 # A100 maximum capacity
     SAVE_FOLD=1
 
     DATA_VER=pHoLt8iLSrkD3XB
