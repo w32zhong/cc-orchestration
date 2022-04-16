@@ -45,8 +45,22 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=
     ;;
 
-   pretrain-for-newvocab-using-v2-data)
-    DEV_BSIZE=40 # A6000
+   pretrain-for-newvocab-using-v2-data-a6000)
+    DEV_BSIZE=38
+    SAVE_FOLD=1
+
+    DATA_VER=Ce6aTdC3AsGEXj9
+    START_POINT=bert-base-uncased
+    TOK_CKPOINT=bert-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=100
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v2.pkl"
+    TRAINER_ARGS=
+    ;;
+
+   pretrain-for-newvocab-using-v2-data-a100)
+    DEV_BSIZE=30
     SAVE_FOLD=1
 
     DATA_VER=Ce6aTdC3AsGEXj9
