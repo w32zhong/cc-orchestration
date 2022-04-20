@@ -345,6 +345,7 @@ fi;
 
 # Other example usages
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
+#salloc --nodes=1 --partition=compute_full_node --gpus-per-node=4 --time=0-01:10 # Mist
 #srun --jobid 12345 --pty bash
 #
 # git clone https://github.com/t-k-/cc-orchestration.git
