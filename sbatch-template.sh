@@ -6,13 +6,14 @@
 #SBATCH --time=3-02:10      # days-hours:minutes
 #SBATCH --output=job-%j-%N.out
 set -x
-date
 
 #####################
 #  Configuration
 #####################
 TRAINER=${1-pretrain}
 SETUP=${2}
+DEVICES=${3} # only needed for local training (non-Slurm)
+DATE=$(date)
 CODE_VER=$(test -e pya0 && cd pya0 && pwd && git rev-parse HEAD)
 COMMAND="$0 $@"
 
@@ -57,6 +58,20 @@ case $TRAINER-${SETUP} in
     TEST_CYCLE=100
     CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v3.pkl"
     TRAINER_ARGS=
+    ;;
+
+   pretrain-condenser-using-v3-allenv-a6000)
+    DEV_BSIZE=16
+    SAVE_FOLD=1
+
+    DATA_VER=ABC
+    START_POINT=bert-base-uncased
+    TOK_CKPOINT=bert-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=100
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v3-allenv.pkl"
+    TRAINER_ARGS="--architecture condenser --warmup-epochs 1"
     ;;
 
    pretrain-for-newvocab-using-v2-data-a100)
@@ -324,8 +339,8 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-let TOTAL_N="$N_NODE * $N_GPUS"
 if which srun && [ $TOTAL_N -gt 1 ]; then
+    let TOTAL_N="$N_NODE * $N_GPUS"
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $CALL_ARGS \
@@ -335,12 +350,16 @@ if which srun && [ $TOTAL_N -gt 1 ]; then
         --batch_size $(($TOTAL_N * $DEV_BSIZE)) \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS
 else
+    TOTAL_N=$(echo $DEVICES | awk -F',' '{print NF}')
+    export SLURM_JOB_ID=$TRAINER-${SETUP}
     python ./pya0/utils/transformer.py $TRAINER \
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $CALL_ARGS \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
-        --batch_size $DEV_BSIZE \
-        --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS
+        --cluster tcp://$(hostname):8912 \
+        --batch_size $(($TOTAL_N * $DEV_BSIZE)) \
+        --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS \
+        --dev_map $DEVICES
 fi;
 
 # Other example usages
