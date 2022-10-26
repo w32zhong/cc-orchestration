@@ -57,21 +57,35 @@ case $TRAINER-${SETUP} in
     TEST_FILE=test.txt
     TEST_CYCLE=100
     CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v3.pkl"
-    TRAINER_ARGS=
+    TRAINER_ARGS="--architecture standard --warmup-epochs 1 --lr 1e-4"
     ;;
 
    pretrain-condenser-using-v3-allenv-a6000)
     DEV_BSIZE=16
     SAVE_FOLD=1
 
-    DATA_VER=ABC
+    DATA_VER=9ap65wbmEJ6PZre
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=100
     CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v3-allenv.pkl"
-    TRAINER_ARGS="--architecture condenser --warmup-epochs 1"
+    TRAINER_ARGS="--architecture condenser --warmup-epochs 1 --lr 1e-4"
+    ;;
+
+   pretrain-cotmae-using-v3-allenv-a6000)
+    DEV_BSIZE=16
+    SAVE_FOLD=1
+
+    DATA_VER=9ap65wbmEJ6PZre
+    START_POINT=bert-base-uncased
+    TOK_CKPOINT=bert-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=100
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v3-allenv.pkl"
+    TRAINER_ARGS="--architecture mae --warmup-epochs 1 --lr 1e-4"
     ;;
 
    pretrain-for-newvocab-using-v2-data-a100)
