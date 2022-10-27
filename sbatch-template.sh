@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --nodes=2           # total nodes
+#SBATCH --nodes=4           # total nodes
 #SBATCH --gres=gpu:2        # how many GPUs per node
 #SBATCH --cpus-per-task=2   # Cores proportional to GPUs: 6 on Cedar, 16 on Graham.
 #SBATCH --mem=64gb          # Memory proportional to GPUs: 32000 Cedar, 64000 Graham.
-#SBATCH --time=3-02:10      # days-hours:minutes
+#SBATCH --time=4-02:10      # days-hours:minutes
 #SBATCH --output=job-%j-%N.out
 set -x
 
@@ -395,7 +395,7 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-if which srun && [ $TOTAL_N -gt 1 ]; then
+if which srun; then
     let TOTAL_N="$N_NODE * $N_GPUS"
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
