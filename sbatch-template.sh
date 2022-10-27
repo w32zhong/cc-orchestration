@@ -64,7 +64,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=12
     SAVE_FOLD=1
 
-    DATA_VER=Y53g3oaE42pXm8o
+    DATA_VER=sxMWfYtEFmTCTGM
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -78,7 +78,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=12
     SAVE_FOLD=1
 
-    DATA_VER=Y53g3oaE42pXm8o
+    DATA_VER=sxMWfYtEFmTCTGM
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -106,7 +106,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=16
     SAVE_FOLD=1
 
-    DATA_VER=Y53g3oaE42pXm8o
+    DATA_VER=sxMWfYtEFmTCTGM
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -120,7 +120,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=16
     SAVE_FOLD=1
 
-    DATA_VER=Y53g3oaE42pXm8o
+    DATA_VER=sxMWfYtEFmTCTGM
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
