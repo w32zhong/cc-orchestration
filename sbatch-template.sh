@@ -395,7 +395,7 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-if [ "$0" == "sbatch" ]; then
+if which srun; then
     let TOTAL_N="$N_NODE * $N_GPUS"
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
