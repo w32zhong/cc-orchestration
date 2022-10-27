@@ -12,7 +12,7 @@ set -x
 #####################
 TRAINER=${1-pretrain}
 SETUP=${2}
-DEVICES=${3} # only needed for local training (non-Slurm)
+DEVICES=${3-0} # only needed for local training (non-Slurm)
 DATE=$(date)
 CODE_VER=$(test -e pya0 && cd pya0 && pwd && git rev-parse HEAD)
 COMMAND="$0 $@"
@@ -64,7 +64,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=12
     SAVE_FOLD=1
 
-    DATA_VER=sxMWfYtEFmTCTGM
+    DATA_VER=FDoixTjWwJPo5TD
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -78,7 +78,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=12
     SAVE_FOLD=1
 
-    DATA_VER=sxMWfYtEFmTCTGM
+    DATA_VER=FDoixTjWwJPo5TD
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -106,7 +106,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=16
     SAVE_FOLD=1
 
-    DATA_VER=sxMWfYtEFmTCTGM
+    DATA_VER=FDoixTjWwJPo5TD
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -120,7 +120,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=16
     SAVE_FOLD=1
 
-    DATA_VER=sxMWfYtEFmTCTGM
+    DATA_VER=FDoixTjWwJPo5TD
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -395,7 +395,7 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
-if which srun; then
+if [ "$0" == "sbatch" ]; then
     let TOTAL_N="$N_NODE * $N_GPUS"
     srun --unbuffered \
         python ./pya0/utils/transformer.py $TRAINER \
