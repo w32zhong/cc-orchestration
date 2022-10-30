@@ -231,18 +231,18 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=--active_fp16
     ;;
 
-   dpr-on-basilisk-using-new-data-model)
-    DEV_BSIZE=36
+   dpr-on-basilisk-using-condenser)
+    DEV_BSIZE=54 # 3 * 18
     SAVE_FOLD=1
 
-    DATA_VER=kYsYFf5JbdbZFda
-    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921/
-    TOK_CKPOINT=bert-tokenizer-for-math
+    DATA_VER=SIM
+    START_POINT=condenser-model/encoder.ckpt/
+    TOK_CKPOINT=condenser-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS='--dev_map 0,1 --cluster tcp://localhost:8912 --lr 3e-6'
+    TRAINER_ARGS="--warmup-epochs 1 --lr 5e-5"
     ;;
 
    dpr-on-narval-using-pretrained-model)
