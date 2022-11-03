@@ -231,21 +231,35 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=--active_fp16
     ;;
 
-   dpr-on-basilisk-using-condenser)
+   single_vec_retriever-on-basilisk-using-condenser)
     DEV_BSIZE=54 # 3 * 18
     SAVE_FOLD=1
 
     DATA_VER=SIM
-    START_POINT=condenser-model/encoder.ckpt/
+    START_POINT=cotmae-6-1-0/encoder.ckpt/
     TOK_CKPOINT=condenser-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS="--warmup-epochs 1 --lr 5e-5"
+    TRAINER_ARGS="--warmup-epochs 1 --lr 2e-5"
     ;;
 
-   dpr-on-narval-using-pretrained-model)
+   single_vec_retriever-on-basilisk-for-splade)
+    DEV_BSIZE=9
+    SAVE_FOLD=1
+
+    DATA_VER=SIM
+    START_POINT=cotmae-6-1-0/encoder.ckpt/
+    TOK_CKPOINT=condenser-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS="--architecture splade --warmup-epochs 1 --lr 2e-5"
+    ;;
+
+   single_vec_retriever-on-narval-using-pretrained-model)
     DEV_BSIZE=16
     SAVE_FOLD=2
 
@@ -259,7 +273,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=
     ;;
 
-   dpr-on-narval-using-finetuned-model)
+   single_vec_retriever-on-narval-using-finetuned-model)
     DEV_BSIZE=16
     SAVE_FOLD=2
 
@@ -273,7 +287,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=
     ;;
 
-   dpr-from-vanilla-backbone-v3-on-v100)
+   single_vec_retriever-from-vanilla-backbone-v3-on-v100)
     EPOCHS=8
     DEV_BSIZE=8
     SAVE_FOLD=1
@@ -288,7 +302,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS='--lr 3e-6'
     ;;
 
-   dpr-from-3ep-pretrained-v3-on-narval)
+   single_vec_retriever-from-3ep-pretrained-v3-on-narval)
     EPOCHS=8
     DEV_BSIZE=14
     SAVE_FOLD=1
@@ -303,7 +317,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS='--lr 3e-6'
     ;;
 
-   dpr-from-7ep-pretrained-v3-on-v100)
+   single_vec_retriever-from-7ep-pretrained-v3-on-v100)
     EPOCHS=8
     DEV_BSIZE=8
     SAVE_FOLD=1
@@ -318,7 +332,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS='--lr 3e-6'
     ;;
 
-   dpr-from-scibert-v3-on-narval)
+   single_vec_retriever-from-scibert-v3-on-narval)
     EPOCHS=8
     DEV_BSIZE=14
     SAVE_FOLD=1
@@ -333,7 +347,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS='--lr 3e-6'
     ;;
 
-   dpr-from-azbert-v3-on-v100)
+   single_vec_retriever-from-azbert-v3-on-v100)
     EPOCHS=8
     DEV_BSIZE=8
     SAVE_FOLD=1
