@@ -232,7 +232,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    single_vec_retriever-on-basilisk-using-condenser)
-    DEV_BSIZE=54 # 3 * 18
+    DEV_BSIZE=18
     SAVE_FOLD=1
 
     DATA_VER=SIM
@@ -246,7 +246,7 @@ case $TRAINER-${SETUP} in
     ;;
 
    single_vec_retriever-on-basilisk-for-splade)
-    DEV_BSIZE=9
+    DEV_BSIZE=12
     SAVE_FOLD=1
 
     DATA_VER=SIM
