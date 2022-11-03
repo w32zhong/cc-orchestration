@@ -409,6 +409,8 @@ export SLURM_ACCOUNT=def-jimmylin
 export SBATCH_ACCOUNT=$SLURM_ACCOUNT
 export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
+export TORCH_DISTRIBUTED_DEBUG=OFF #DETAIL
+
 if which srun; then
     let TOTAL_N="$N_NODE * $N_GPUS"
     srun --unbuffered \
