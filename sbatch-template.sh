@@ -237,7 +237,7 @@ case $TRAINER-${SETUP} in
 
     DATA_VER=SIM
     START_POINT=condenser-6-1-0/encoder.ckpt/
-    TOK_CKPOINT=condenser-tokenizer
+    TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
@@ -251,7 +251,7 @@ case $TRAINER-${SETUP} in
 
     DATA_VER=SIM
     START_POINT=cotmae-6-1-0/encoder.ckpt/
-    TOK_CKPOINT=condenser-tokenizer
+    TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
@@ -265,7 +265,7 @@ case $TRAINER-${SETUP} in
 
     DATA_VER=SIM
     START_POINT=cotmae-6-1-0/encoder.ckpt/
-    TOK_CKPOINT=condenser-tokenizer
+    TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=300
