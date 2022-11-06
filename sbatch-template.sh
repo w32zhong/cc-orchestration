@@ -445,7 +445,8 @@ else
         --cluster tcp://$(hostname):8912 \
         --batch_size $(($TOTAL_N * $DEV_BSIZE)) \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS \
-        --dev_map $DEVICES
+        --dev_map $DEVICES \
+        2>&1 | tee job-${SLURM_JOB_ID}.console.log
 fi;
 
 # Other example usages
