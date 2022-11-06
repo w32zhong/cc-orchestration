@@ -425,6 +425,15 @@ export SALLOC_ACCOUNT=$SLURM_ACCOUNT
 
 export TORCH_DISTRIBUTED_DEBUG=OFF #DETAIL
 
+lower_port=$(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $1}')
+upper_port=$(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $2}')
+set +x
+for port in $(seq $lower_port $upper_port); do
+    nc -z $(hostname) $port 2>/dev/null && break
+done
+set -x
+echo "Using TCP port ${port} ..."
+
 if which srun; then
     let TOTAL_N="$N_NODE * $N_GPUS"
     srun --unbuffered \
@@ -432,7 +441,7 @@ if which srun; then
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $CALL_ARGS \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
-        --cluster tcp://$(hostname):8912 \
+        --cluster tcp://$(hostname):${port} \
         --batch_size $(($TOTAL_N * $DEV_BSIZE)) \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS
 else
@@ -442,7 +451,7 @@ else
         $DATA_DIR/$START_POINT $DATA_DIR/$TOK_CKPOINT $CALL_ARGS \
         --test_file $DATA_DIR/$TEST_FILE --test_cycle $TEST_CYCLE \
         --shards_list $DATA_DIR/$SHARDS_LIST \
-        --cluster tcp://$(hostname):8912 \
+        --cluster tcp://$(hostname):${port} \
         --batch_size $(($TOTAL_N * $DEV_BSIZE)) \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS \
         --dev_map $DEVICES \
