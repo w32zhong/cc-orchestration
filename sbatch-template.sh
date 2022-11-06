@@ -429,7 +429,7 @@ lower_port=$(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $1}')
 upper_port=$(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $2}')
 set +x
 for port in $(seq $lower_port $upper_port); do
-    nc -z $(hostname) $port 2>/dev/null && break
+    nc -z $(hostname) $port 2>/dev/null || break
 done
 set -x
 echo "Using TCP port ${port} ..."
