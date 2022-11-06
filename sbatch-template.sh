@@ -462,7 +462,7 @@ else
 fi;
 
 # redirect the following to console logs (END)
-} 2>&1 | tee -a job-$TRAINER-$SETUP.console.log
+} 2>&1 | tee job-$TRAINER-$SETUP.console.log
 
 # Other example usages
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
