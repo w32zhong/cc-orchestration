@@ -13,6 +13,10 @@ set -x
 TRAINER=${1-pretrain}
 SETUP=${2}
 DEVICES=${3-0} # only needed for local training (non-Slurm)
+
+# redirect the following to console logs (BEGIN)
+{
+
 DATE=$(date)
 CODE_VER=$(test -e pya0 && cd pya0 && pwd && git rev-parse HEAD)
 COMMAND="$0 $@"
@@ -454,9 +458,11 @@ else
         --cluster tcp://$(hostname):${port} \
         --batch_size $(($TOTAL_N * $DEV_BSIZE)) \
         --save_fold $SAVE_FOLD --epochs $EPOCHS $TRAINER_ARGS \
-        --dev_map $DEVICES \
-        2>&1 | tee job-${SLURM_JOB_ID}.console.log
+        --dev_map $DEVICES
 fi;
+
+# redirect the following to console logs (END)
+} 2>&1 | tee -a job-$TRAINER-$SETUP.console.log
 
 # Other example usages
 #salloc --nodes=1 --gres=gpu:1 --cpus-per-task=2 --time=0-01:10 --mem=32gb
