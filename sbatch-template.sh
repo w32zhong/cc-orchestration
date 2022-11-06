@@ -88,17 +88,17 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS="--architecture mae --warmup-epochs 1 --lr 1e-4"
     ;;
 
-   pretrain-for-newvocab-using-v3-data-a6000)
+   pretrain-for-standard-using-v3-allenv-a6000)
     DEV_BSIZE=38
     SAVE_FOLD=1
 
-    DATA_VER=nzzsWr7Nsz6sjfW
+    DATA_VER=FDoixTjWwJPo5TD
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
     TEST_CYCLE=100
-    CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v3.pkl"
+    CALL_ARGS="data.$DATA_VER/mse-aops-2021-vocab-v3-allenv.pkl"
     TRAINER_ARGS="--architecture standard --warmup-epochs 1 --lr 1e-4"
     ;;
 
