@@ -235,12 +235,12 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS=--active_fp16
     ;;
 
-   single_vec_retriever-on-basilisk-using-bertnsp350)
+   single_vec_retriever-on-basilisk-using-bertnsp)
     DEV_BSIZE=18
     SAVE_FOLD=1
 
     DATA_VER=SIM
-    START_POINT=bertnsp-3-5-0/encoder.ckpt/
+    START_POINT=bertnsp-6-1-0
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
     TEST_FILE=test.txt
