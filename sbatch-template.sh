@@ -239,7 +239,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=18
     SAVE_FOLD=1
 
-    DATA_VER=SIM
+    DATA_VER=djmsGSbXAwWConj
     START_POINT=bertnsp-3-5-0
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
@@ -253,7 +253,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=18
     SAVE_FOLD=1
 
-    DATA_VER=SIM
+    DATA_VER=djmsGSbXAwWConj
     START_POINT=bertnsp-6-1-0
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
@@ -267,7 +267,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=18
     SAVE_FOLD=1
 
-    DATA_VER=SIM
+    DATA_VER=djmsGSbXAwWConj
     START_POINT=condenser-3-5-0/encoder.ckpt/
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
@@ -281,7 +281,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=18
     SAVE_FOLD=1
 
-    DATA_VER=SIM
+    DATA_VER=djmsGSbXAwWConj
     START_POINT=condenser-6-1-0/encoder.ckpt/
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
@@ -295,7 +295,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=18
     SAVE_FOLD=1
 
-    DATA_VER=SIM
+    DATA_VER=djmsGSbXAwWConj
     START_POINT=cotmae-3-5-0/encoder.ckpt/
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
@@ -309,7 +309,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=18
     SAVE_FOLD=1
 
-    DATA_VER=SIM
+    DATA_VER=djmsGSbXAwWConj
     START_POINT=cotmae-6-1-0/encoder.ckpt/
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
@@ -323,7 +323,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=12
     SAVE_FOLD=1
 
-    DATA_VER=SIM
+    DATA_VER=djmsGSbXAwWConj
     START_POINT=cotmae-6-1-0/encoder.ckpt/
     TOK_CKPOINT=math-tokenizer
     SHARDS_LIST=shards.txt
