@@ -559,3 +559,5 @@ fi;
 # git clone https://github.com/approach0/pya0.git
 # ln -s cc-orchestration/sbatch-template.sh sbatch.sh
 # (cd pya0 && git pull) && (cd cc-orchestration && git pull)
+#
+# ps -up `nvidia-smi -q -x | grep -Po '(?<=<pid>)[0-9]+'`
