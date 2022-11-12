@@ -96,7 +96,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=38
     SAVE_FOLD=1
 
-    DATA_VER=FDoixTjWwJPo5TD
+    DATA_VER=unknown
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
