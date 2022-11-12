@@ -377,6 +377,20 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS="--architecture splade --splade_reg 1e-6 --warmup-epochs 1 --lr 2e-5"
     ;;
 
+   single_vec_retriever-on-basilisk-for-splade__0__2e-5)
+    DEV_BSIZE=12
+    SAVE_FOLD=1
+
+    DATA_VER=djmsGSbXAwWConj
+    START_POINT=cotmae-6-1-0/encoder.ckpt/
+    TOK_CKPOINT=math-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS="--architecture splade --splade_reg 0 --warmup-epochs 1 --lr 2e-5"
+    ;;
+
    single_vec_retriever-on-basilisk-for-splade__1e-6__5e-6)
     DEV_BSIZE=12
     SAVE_FOLD=1
