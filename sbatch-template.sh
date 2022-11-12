@@ -96,7 +96,7 @@ case $TRAINER-${SETUP} in
     DEV_BSIZE=38
     SAVE_FOLD=1
 
-    DATA_VER=unknown
+    DATA_VER=bertnsp
     START_POINT=bert-base-uncased
     TOK_CKPOINT=bert-tokenizer
     SHARDS_LIST=shards.txt
@@ -349,7 +349,7 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS="--warmup-epochs 1 --lr 2e-5"
     ;;
 
-   single_vec_retriever-on-basilisk-for-splade)
+   single_vec_retriever-on-basilisk-for-splade__1e-3__2e-5)
     DEV_BSIZE=12
     SAVE_FOLD=1
 
@@ -360,7 +360,35 @@ case $TRAINER-${SETUP} in
     TEST_FILE=test.txt
     TEST_CYCLE=300
     CALL_ARGS=
-    TRAINER_ARGS="--architecture splade --warmup-epochs 1 --lr 2e-5"
+    TRAINER_ARGS="--architecture splade --splade_reg 1e-3 --warmup-epochs 1 --lr 2e-5"
+    ;;
+
+   single_vec_retriever-on-basilisk-for-splade__1e-6__2e-5)
+    DEV_BSIZE=12
+    SAVE_FOLD=1
+
+    DATA_VER=djmsGSbXAwWConj
+    START_POINT=cotmae-6-1-0/encoder.ckpt/
+    TOK_CKPOINT=math-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS="--architecture splade --splade_reg 1e-6 --warmup-epochs 1 --lr 2e-5"
+    ;;
+
+   single_vec_retriever-on-basilisk-for-splade__1e-6__5e-6)
+    DEV_BSIZE=12
+    SAVE_FOLD=1
+
+    DATA_VER=djmsGSbXAwWConj
+    START_POINT=cotmae-6-1-0/encoder.ckpt/
+    TOK_CKPOINT=math-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS="--architecture splade --splade_reg 1e-6 --warmup-epochs 1 --lr 5e-6"
     ;;
 
    single_vec_retriever-on-narval-using-pretrained-model)
