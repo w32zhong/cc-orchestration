@@ -405,6 +405,20 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS="--architecture splade --splade_reg 1e-2 --splade_mask_mode somemath --warmup-epochs 1 --lr 2e-5"
     ;;
 
+   single_vec_retriever-on-basilisk-for-splade__1e6_somemath)
+    DEV_BSIZE=12
+    SAVE_FOLD=1
+
+    DATA_VER=djmsGSbXAwWConj
+    START_POINT=cotmae-6-1-0/encoder.ckpt/
+    TOK_CKPOINT=math-tokenizer
+    SHARDS_LIST=shards.txt
+    TEST_FILE=test.txt
+    TEST_CYCLE=300
+    CALL_ARGS=
+    TRAINER_ARGS="--architecture splade --splade_reg 1e-6 --splade_mask_mode somemath --warmup-epochs 1 --lr 2e-5"
+    ;;
+
    single_vec_retriever-on-narval-using-pretrained-model)
     DEV_BSIZE=16
     SAVE_FOLD=2
