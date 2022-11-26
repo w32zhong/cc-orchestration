@@ -206,35 +206,6 @@ case $TRAINER-${SETUP} in
     TRAINER_ARGS="--lr 2e-5 --dev_map 2"
     ;;
 
-   colbert-on-narval-v2-128)
-    DEV_BSIZE=15 # A100 maximum capacity
-    SAVE_FOLD=1
-
-    DATA_VER=kYsYFf5JbdbZFda
-    START_POINT=bert-pretrained-for-math-7ep-3.5b/7-5-921/
-    TOK_CKPOINT=bert-tokenizer-for-math
-    SHARDS_LIST=shards.txt
-    TEST_FILE=test.txt
-    TEST_CYCLE=200
-    CALL_ARGS="128" # qmax
-    TRAINER_ARGS=--active_fp16
-    ;;
-
-   colbert-on-narval-v3)
-    EPOCHS=9
-    DEV_BSIZE=15 # A100 maximum capacity
-    SAVE_FOLD=1
-
-    DATA_VER=pHoLt8iLSrkD3XB
-    START_POINT=bert-pretrained-for-math/7-5-921
-    TOK_CKPOINT=bert-tokenizer-for-math
-    SHARDS_LIST=shards.txt
-    TEST_FILE=test.txt
-    TEST_CYCLE=300
-    CALL_ARGS="512" # qmax
-    TRAINER_ARGS=--active_fp16
-    ;;
-
    colbert-on-basilisk-using-bertnsp)
     EPOCHS=8
     DEV_BSIZE=16
