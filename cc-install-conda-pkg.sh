@@ -1,5 +1,7 @@
 export PYTHONPATH=""
 export PIP_CONFIG_FILE=""
+module load cuda
+
 #conda create --yes --name py38 python=3.7.10
 #conda activate py38
 conda install --yes pytorch cudatoolkit=11.1 -c pytorch # pytorch=1.10.0
